@@ -8,7 +8,9 @@ import styles from '../styles/controls.module.css';
 
 interface ControlProps {
     number1: string,
-    number2: string
+    number2: string,
+    handleNumber1Change: (value: string) => void,
+    handleNumber2Change: (value: string) => void
 }
 
 
