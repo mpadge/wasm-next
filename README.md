@@ -41,3 +41,25 @@ Each additional function can be defined within the same `src/add.rs` file (or
 elsewhere), but should be exported within separate components. Those exports
 can then be imported on whatever page or component they'll be used, and called
 directly from there.
+
+### Adding crates
+
+Entire crates can also be bundled and compiled to WebAssembly. Compilation then
+requires the [wasm-pack](https://github.com/rustwasm/wasm-pack) tool, which can
+be called from `npm` by adding the following line (as a "script") to
+`package.json`:
+```
+"build-crate": "cd src && wasm-pack build --target web --out-dir ../pkg",
+```
+The final `--out-dir` flag specifies the directory where the wasm binary will
+be created. Generation of WASM binaries also requires modifying `Cargo.toml`
+files by adding the following lines:
+```
+[lib]
+crate-type = ["cdylib"]
+```
+or possibly:
+```
+[lib]
+crate-type = ["cdylib", "rlib"]
+```
