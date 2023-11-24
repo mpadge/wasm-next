@@ -36,6 +36,9 @@ export default function Control (props: ControlProps) {
     const handleNumber1Change = (value: string) => {
         setNumber1(value);
     }
+    const handleNumber2Change = (value: string) => {
+        setNumber2(value);
+    }
 
     return (
         <>
@@ -49,6 +52,16 @@ export default function Control (props: ControlProps) {
             //isClearable={isClearable}
             isSearchable={isSearchable}
             onChange = {handleNumber1Change}
+        />
+
+        <h3>Number2</h3>
+        <Select
+            options={options}
+            defaultValue={options[0]}
+            name="Number2"
+            //isClearable={isClearable}
+            isSearchable={isSearchable}
+            onChange = {handleNumber2Change}
         />
 
         </div>
