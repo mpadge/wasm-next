@@ -3,7 +3,7 @@
   display: inherit;
   justify-content: center;
   align-items: center;
-  margin: 20px;
+  margin: 50px;
   z-index: 10;
   position: absolute;
   background-color: rgba(238, 240, 241, 0.5);
@@ -11,7 +11,7 @@
   border-radius: 12px;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   top: 0;
-  left: 0;
+  left: 100;
   width: 10dvw;
 }
 
