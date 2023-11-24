@@ -8,9 +8,7 @@ export default async function handler() {
   const instance = (await module$) as any
   const exports = instance.exports as AddModuleExports
   const { add_one: addOne } = exports
-  const { add_two: addTwo } = exports
   const number = addOne(10)
-  const number = addTwo(10, 10)
 
   return new Response(`got: ${number}`)
 }

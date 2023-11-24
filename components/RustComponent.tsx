@@ -11,7 +11,6 @@ const RustComponent = dynamic({
     // @ts-ignore
     const exports = (await import('../add.wasm')) as AddModuleExports
     const { add_one: addOne } = exports
-    const { add_two: addTwol } = exports
 
     // Return a React component that calls the add_one method on the wasm module
     return ({ number }: RustComponentProps) => (
