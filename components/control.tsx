@@ -42,8 +42,6 @@ export default function Control (props: ControlProps) {
     };
 
 
-    console.log("(number1, number2):", props.number1, props.number2)
-
     return (
         <>
         <div id="top-left-container" className={styles.controls}>
