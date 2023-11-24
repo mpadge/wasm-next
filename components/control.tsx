@@ -32,6 +32,16 @@ export default function Control (props: ControlProps) {
     const [isSearchable, setIsSearchable] = useState(true);
     const [selected, setSelected] = useState(null);
 
+    const handleChange1 = (selectedOption: any) => {
+        setSelected(selectedOption);
+        props.handleNumber1Change(selectedOption.value);
+    };
+    const handleChange2 = (selectedOption: any) => {
+        setSelected(selectedOption);
+        props.handleNumber2Change(selectedOption.value);
+    };
+
+
     console.log("(number1, number2):", props.number1, props.number2)
 
     return (
@@ -41,11 +51,11 @@ export default function Control (props: ControlProps) {
         <h3>Number1</h3>
         <Select
             options={options}
-            defaultValue={options[0]}
+            defaultValue={options[0].value}
             name="Number1"
             //isClearable={isClearable}
             isSearchable={isSearchable}
-            onChange = {props.handleNumber1Change}
+            onChange = {handleChange1}
         />
 
         <h3>Number2</h3>
@@ -55,7 +65,7 @@ export default function Control (props: ControlProps) {
             name="Number2"
             //isClearable={isClearable}
             isSearchable={isSearchable}
-            onChange = {props.handleNumber2Change}
+            onChange = {handleChange2}
         />
 
         </div>
