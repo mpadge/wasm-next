@@ -19,7 +19,7 @@ the directory root, `/`.
     the C Applicaiton Binary Interface (ABI), so the compiled binary can be
     called from JavaScript.
 2. Add a typescript rust component, like `components/RustComponent2.tsx` here.
-   That component should import the rust binary (see Step X below), export the
+   That component should import the rust binary (see Step 4), export the
    function defined there, and wrap the whole thing in a JavaScript function.
 3. In the target page where the rust function is to be called, import the
    component defined in the previous step, and then simply add that component.
