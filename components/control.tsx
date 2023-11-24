@@ -16,9 +16,6 @@ interface ControlProps {
 
 export default function Control (props: ControlProps) {
 
-    const [Number1, setNumber1] = useState(props.number1);
-    const [Number2, setNumber2] = useState(props.number2);
-
     const options = [
         { value: "10", label: "10" },
         { value: "20", label: "20" },
@@ -35,12 +32,7 @@ export default function Control (props: ControlProps) {
     const [isSearchable, setIsSearchable] = useState(true);
     const [selected, setSelected] = useState(null);
 
-    const handleNumber1Change = (value: string) => {
-        setNumber1(value);
-    }
-    const handleNumber2Change = (value: string) => {
-        setNumber2(value);
-    }
+    console.log("(number1, number2):", props.number1, props.number2)
 
     return (
         <>
@@ -53,7 +45,7 @@ export default function Control (props: ControlProps) {
             name="Number1"
             //isClearable={isClearable}
             isSearchable={isSearchable}
-            onChange = {handleNumber1Change}
+            onChange = {props.handleNumber1Change}
         />
 
         <h3>Number2</h3>
@@ -63,7 +55,7 @@ export default function Control (props: ControlProps) {
             name="Number2"
             //isClearable={isClearable}
             isSearchable={isSearchable}
-            onChange = {handleNumber2Change}
+            onChange = {props.handleNumber2Change}
         />
 
         </div>
