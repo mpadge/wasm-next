@@ -6,7 +6,8 @@ repository illustrates a finished example. This simply details the steps needed
 to integrate WebAssembly within an existing nextjs project. This project uses
 the directory root, `/`.
 
-1. Define your rust function. The one used here is in a `/src` directory:
+1. Define your rust function. The one used here is in a [`/src`
+   directory](https://github.com/mpadge/wasm-next/tree/main/src):
 
     ``` rust
     #[no_mangle]
@@ -18,12 +19,14 @@ the directory root, `/`.
     can be called in JavaScript, and the `extern "C"` tells the compiler to use
     the C Applicaiton Binary Interface (ABI), so the compiled binary can be
     called from JavaScript.
-2. Add a typescript rust component, like `components/RustComponent2.tsx` here.
+2. Add a typescript rust component, like [`components/RustComponent2.tsx`
+   here](https://github.com/mpadge/wasm-next/blob/main/components/RustComponent2.tsx).
    That component should import the rust binary (see Step 4), export the
    function defined there, and wrap the whole thing in a JavaScript function.
 3. In the target page where the rust function is to be called, import the
    component defined in the previous step, and then simply add that component.
-   That page in this case is `pages/index.tsx`.
+   That page in this case is
+   [`pages/index.tsx`](https://github.com/mpadge/wasm-next/blob/main/pages/index.tsx).
 4. Modify `package.json` to add a command (under "scripts") to compile the rust binary, for example,
     ```
     "build-rust": "rustc --target wasm32-unknown-unknown -O --crate-type=cdylib src/add.rs -o add.wasm",
