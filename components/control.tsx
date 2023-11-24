@@ -51,7 +51,7 @@ export default function Control (props: ControlProps) {
         <h3>Number1</h3>
         <Select
             options={options}
-            defaultValue={options[0].value}
+            defaultValue={options[0]}
             name="Number1"
             //isClearable={isClearable}
             isSearchable={isSearchable}
