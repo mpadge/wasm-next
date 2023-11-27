@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "next",
     "build-rust": "rustc --target wasm32-unknown-unknown -O --crate-type=cdylib src/add.rs -o add.wasm",
-    "build": "npm run build-rust && next build",
+    "build": "next build",
     "build-crate": "cd src && wasm-pack build --target web --out-dir ../pkg",
     "start": "next start"
   },
