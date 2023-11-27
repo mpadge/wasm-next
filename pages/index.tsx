@@ -9,10 +9,10 @@ export default function Page() {
     const [Number1, setNumber1] = useState(10);
     const [Number2, setNumber2] = useState(10);
     const handleNumber1Change = (value: string) => {
-        setNumber1(value);
+        setNumber1(Number(value));
     }
     const handleNumber2Change = (value: string) => {
-        setNumber2(value);
+        setNumber2(Number(value));
     }
 
     return (

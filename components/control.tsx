@@ -7,10 +7,10 @@ import Image from 'next/image'
 import styles from '../styles/controls.module.css';
 
 interface ControlProps {
-    number1: string,
-    number2: string,
-    handleNumber1Change: (value: string) => void,
-    handleNumber2Change: (value: string) => void
+    number1: number,
+    number2: number,
+    handleNumber1Change: (value: number) => void,
+    handleNumber2Change: (value: number) => void
 }
 
 
@@ -34,11 +34,11 @@ export default function Control (props: ControlProps) {
 
     const handleChange1 = (selectedOption: any) => {
         setSelected(selectedOption);
-        props.handleNumber1Change(selectedOption.value);
+        props.handleNumber1Change(Number(selectedOption.value));
     };
     const handleChange2 = (selectedOption: any) => {
         setSelected(selectedOption);
-        props.handleNumber2Change(selectedOption.value);
+        props.handleNumber2Change(Number(selectedOption.value));
     };
 
 

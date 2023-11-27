@@ -2,8 +2,8 @@ import type { AddModuleExports } from '../wasm'
 import dynamic from 'next/dynamic'
 
 interface RustComponent2Props {
-  number1: Number1
-  number2: Number2
+  number1: Number
+  number2: Number
 }
 
 const RustComponent2 = dynamic({
