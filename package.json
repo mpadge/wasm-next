@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next",
-    "build-rust": "rustc --target wasm32-unknown-unknown -O --crate-type=cdylib src/add.rs -o add.wasm",
+    "build-rust": "rustc --target wasm32-unknown-unknown -O --crate-type=cdylib src/add.rs -o wasm/add.wasm",
     "prebuild": "npm run build-rust",
     "build": "next build",
     "build-crate": "cd src && wasm-pack build --target web --out-dir ../pkg",

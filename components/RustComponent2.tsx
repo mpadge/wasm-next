@@ -9,7 +9,7 @@ interface RustComponent2Props {
 const RustComponent2 = dynamic({
   loader: async () => {
     // @ts-ignore
-    const exports = (await import('../add.wasm')) as AddModuleExports
+    const exports = (await import('../wasm/add.wasm')) as AddModuleExports
     const { add_two: addTwo } = exports
 
     return ({ number1, number2 }: RustComponent2Props) => (
