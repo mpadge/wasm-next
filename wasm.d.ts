@@ -1,3 +1,3 @@
 export interface AddModuleExports {
-  add_one(number: Number): Number
+  add_two(number1: Number, number2: Number): Number
 }
