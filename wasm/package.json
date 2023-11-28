@@ -1,0 +1,19 @@
+{
+  "name": "testcrate",
+  "type": "module",
+  "collaborators": [
+    "Mark Padgham <mark.padgham@email.com>"
+  ],
+  "version": "0.1.0",
+  "license": "MIT",
+  "files": [
+    "testcrate_bg.wasm",
+    "testcrate.js",
+    "testcrate.d.ts"
+  ],
+  "main": "testcrate.js",
+  "types": "testcrate.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
