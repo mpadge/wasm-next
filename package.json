@@ -4,7 +4,7 @@
     "dev": "next",
     "build-rust": "rustc --target wasm32-unknown-unknown -O --crate-type=cdylib src/add.rs -o wasm/add.wasm",
     "build": "next build",
-    "build-crate": "wasm-pack build src --target web --out-dir ../wasm",
+    "build-crate": "wasm-pack build wasm --target web --out-dir ../pkg",
     "start": "next start"
   },
   "dependencies": {
