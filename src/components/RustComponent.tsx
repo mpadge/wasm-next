@@ -8,7 +8,14 @@ interface RustComponentProps {
 }
 
 interface MultTwoExports {
-  mult_two: (a: number[], b: number[]) => number[]
+  mult_two: (a: Float64Array, b: Float64Array) => Float64Array
+}
+
+function allocateSpaceForVector(vector: Float64Array, memory: WebAssembly.Memory): number {
+  const ptr = memory.grow(vector.length);
+  const view = new Float64Array(memory.buffer, ptr, vector.length);
+  view.set(vector);
+  return ptr;
 }
 
 const RustComponent = dynamic({
@@ -23,28 +30,32 @@ const RustComponent = dynamic({
     const vector2 = Float64Array.from({ length: 5 }, () => Math.random());
 
     // Allocate space in the Wasm memory for the input vectors and copy the vectors into it
-    const ptr1 = allocateSpaceForVector(vector1);
-    const ptr2 = allocateSpaceForVector(vector2);
+    const ptr1 = allocateSpaceForVector(vector1, memory);
+    const ptr2 = allocateSpaceForVector(vector2, memory);
 
-    // Call mult_two and get the pointer to the result vector
-    const resultPtr = mult_two(ptr1, vector1.length, ptr2, vector2.length);
+    const Component = ({ vector1, vector2 }: RustComponentProps) => {
 
-    // Call get_result_len to get the length of the result vector
-    const resultLen = get_result_len();
+        // Call mult_two and get pointer to result vector:
+        const resultPtr = mult_two(ptr1, vector1.length, ptr2, vector2.length);
 
-    // Create a new Float64Array view on the Wasm memory
-    const resultVector = new Float64Array(memory.buffer, resultPtr, resultLen);
+        // get length of result vector:
+        const resultLen = get_result_len();
 
-    // Now resultVector is a JavaScript Float64Array containing the result
-    console.log(resultVector);
+        // Create a new Float64Array view on the Wasm memory
+        const resultVector = new Float64Array(memory.buffer, resultPtr, resultLen);
 
-    return (
-        <div>
-          {resultVector.map((value, index) => (
-            <div key={index}>{value}</div>
-          ))}
-        </div>
-    )
+        console.log(resultVector);
+
+        return (
+            <div>
+              {Array.from(resultVector).map((value: number, index: number) => (
+                <div key={index}>{value}</div>
+              ))}
+            </div>
+        )
+    }
+
+    return Component
     },
     // Ensure only client-side execution:
     ssr: false
