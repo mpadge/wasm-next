@@ -1,0 +1,13 @@
+
+.vector {
+  display: inherit;
+  justify-content: center;
+  align-items: center;
+  margin: 50px;
+  z-index: 10;
+  position: absolute;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  top: 150px;
+  left: 100;
+  width: 20dvw;
+}

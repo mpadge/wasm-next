@@ -2,6 +2,8 @@ import type { InitOutput } from '@/../pkg/testcrate';
 import { initSync } from '@/../pkg/testcrate.js';
 import dynamic from 'next/dynamic'
 
+import styles from '../styles/vector.module.css';
+
 interface RustComponentProps {
   vector1: Float64Array
   vector2: Float64Array
@@ -45,7 +47,7 @@ const RustComponent = dynamic({
         console.log(resultVector);
 
         return (
-            <div>
+            <div className={styles.vector}>
               <h1>Vector Result</h1>
               {Array.from(resultVector).map((value: number, index: number) => (
                 <div key={index}>{value}</div>
