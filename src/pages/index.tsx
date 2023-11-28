@@ -20,6 +20,10 @@ export default function Page() {
     const Vector1 = Float64Array.from({ length: 5 }, () => Math.random());
     const Vector2 = Float64Array.from({ length: 5 }, () => Math.random());
 
+    const filename = "/data/dat1.json";
+    const varname = "bike_index";
+    const nentries = 10;
+
     return (
         <>
         <div>
