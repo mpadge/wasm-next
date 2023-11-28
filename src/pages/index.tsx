@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react';
 import Link from 'next/link'
+import RustComponent from '../components/RustComponent'
 import RustComponent2 from '../components/RustComponent2'
 import Control from '../components/control'
 
@@ -15,6 +16,10 @@ export default function Page() {
         setNumber2(Number(value));
     }
 
+    // Initialize vectors for calling mult_two fn:
+    const Vector1 = Array.from({length: 5}, () => Math.random());
+    const Vector2 = Array.from({length: 5}, () => Math.random());
+
     return (
         <>
         <div>
@@ -25,6 +30,7 @@ export default function Page() {
             handleNumber2Change={setNumber2}
         />
         <RustComponent2 number1={Number1} number2={Number2} />
+        <RustComponent vector1={Vector1} vector2={Vector2} />
         </div>
         </>
     )
