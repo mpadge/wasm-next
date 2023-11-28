@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link'
 import RustComponent from '../components/RustComponent'
 import RustComponent2 from '../components/RustComponent2'
+import RustComponent3 from '../components/RustComponent3'
 import Control from '../components/control'
 
 
@@ -35,6 +36,7 @@ export default function Page() {
         />
         <RustComponent2 number1={Number1} number2={Number2} />
         <RustComponent vector1={Vector1} vector2={Vector2} />
+        <RustComponent3 filename={filename} varname={varname} nentries={nentries} />
         </div>
         </>
     )

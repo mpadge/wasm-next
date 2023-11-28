@@ -40,30 +40,39 @@ pub extern "C" fn read_file(
     varname_len: usize,
     nentries: usize
 ) -> *const f64 {
-    let filename = unsafe { std::str::from_utf8(std::slice::from_raw_parts(filename_ptr, filename_len)).unwrap() };
-    let varname = unsafe { std::str::from_utf8(std::slice::from_raw_parts(varname_ptr, varname_len)).unwrap() };
-    assert!(nentries > 0, "nentries must be greater than zero");
+    //let ftmp = "/data/dat1.json";
+    //assert!(std::path::Path::new(ftmp).exists(), "File does not exist");
+    //let vtmp = "bike_index";
 
-    let file = File::open(filename).unwrap();
-    let reader = BufReader::new(file);
-    let json: Value = serde_json::from_reader(reader).unwrap();
+    //let filename = unsafe { std::str::from_utf8(std::slice::from_raw_parts(filename_ptr, filename_len)).unwrap() };
+    //let varname = unsafe { std::str::from_utf8(std::slice::from_raw_parts(varname_ptr, varname_len)).unwrap() };
+    assert!(nentries > 0, "nentries must be greater than zero");
+    //assert!(std::path::Path::new(filename).exists(), "File does not exist");
+
+    //let file = File::open(filename).unwrap();
+    //let file = File::open(ftmp).unwrap();
+    //let reader = BufReader::new(file);
+    //let json: Value = serde_json::from_reader(reader).unwrap();
 
     let mut result = Vec::with_capacity(nentries);
-    let mut count = 0;
+    //let mut count = 0;
 
-    if let Value::Array(array) = &json {
-        for item in array {
-            if let Value::Object(map) = item {
-                if let Some(Value::Number(number)) = map.get(varname) {
-                    if let Some(number) = number.as_f64() {
-                        if count < nentries {
-                            result.push(number);
-                            count += 1;
-                        }
-                    }
-                }
-            }
-        }
+    //if let Value::Array(array) = &json {
+    //    for item in array {
+    //        if let Value::Object(map) = item {
+    //            if let Some(Value::Number(number)) = map.get(varname) {
+    //                if let Some(number) = number.as_f64() {
+    //                    if count < nentries {
+    //                        result.push(number);
+    //                        count += 1;
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
+    for i in 0..nentries {
+        result.push(i as f64);
     }
 
     let ptr = result.as_mut_ptr();

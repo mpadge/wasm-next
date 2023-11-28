@@ -34,8 +34,12 @@ const RustComponent3 = dynamic({
 
     const Component3 = ({ filename, varname, nentries }: RustComponent3Props) => {
         const { ptr: filename_ptr, len: filename_len } = allocateStringInMemory(filename, memory);
-        const { ptr: varname_ptr, len: varname_len } = allocateStringInMemory(filename, memory);
-   
+        const { ptr: varname_ptr, len: varname_len } = allocateStringInMemory(varname, memory);
+
+        console.log(`Filename: ${filename}`);
+        console.log(`Pointer: ${filename_ptr}`);
+        console.log(`Length: ${filename_len}`);
+      
         const resultPtr = read_file(filename_ptr, filename_len, varname_ptr, varname_len, nentries);
         const resultLen = get_result_len();
    
@@ -45,7 +49,7 @@ const RustComponent3 = dynamic({
         console.log(resultVector);
        
         return (
-            <div className={styles.vector}>
+            <div className={styles.readfile}>
             <h1>ReadFile Result</h1>
                 {Array.from(resultVector).map((value: number, index: number) => (
                 <div key={index}>{value}</div>
