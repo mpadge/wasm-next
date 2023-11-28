@@ -12,7 +12,9 @@ interface MultTwoExports {
 }
 
 function allocateSpaceForVector(vector: Float64Array, memory: WebAssembly.Memory): number {
-  const ptr = memory.grow(vector.length);
+  const ptr = memory.buffer.byteLength;
+  const requiredSpace = vector.length * vector.BYTES_PER_ELEMENT;
+  memory.grow(Math.ceil(requiredSpace / 65536)); // Grow memory by necessary number of pages
   const view = new Float64Array(memory.buffer, ptr, vector.length);
   view.set(vector);
   return ptr;
