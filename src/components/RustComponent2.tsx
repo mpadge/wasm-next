@@ -21,6 +21,8 @@ const RustComponent2 = dynamic({
       </div>
     )
   },
+  // Ensure only client-side execution:
+  ssr: false
 })
 
 export default RustComponent2
