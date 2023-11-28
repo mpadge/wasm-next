@@ -17,8 +17,8 @@ export default function Page() {
     }
 
     // Initialize vectors for calling mult_two fn:
-    const Vector1 = Array.from({length: 5}, () => Math.random());
-    const Vector2 = Array.from({length: 5}, () => Math.random());
+    const Vector1 = Float64Array.from({ length: 5 }, () => Math.random());
+    const Vector2 = Float64Array.from({ length: 5 }, () => Math.random());
 
     return (
         <>
