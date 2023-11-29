@@ -4,6 +4,8 @@ import { add_two } from '@/../pkg/testcrate_bg.wasm';
 
 import dynamic from 'next/dynamic'
 
+import styles from '../styles/styles.module.css';
+
 interface WasmAddTwoProps {
   number1: number
   number2: number
@@ -20,8 +22,11 @@ const WasmAddTwo = dynamic({
     const { add_two: addTwo } = exports
 
     return ({ number1, number2 }: WasmAddTwoProps) => (
-      <div>
-        <>{addTwo(number1, number2)}</>
+      <div className={styles.number}>
+        <>
+            <h3>Sum:</h3>
+            {addTwo(number1, number2)}
+        </>
       </div>
     )
   },

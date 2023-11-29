@@ -3,7 +3,7 @@
   display: inherit;
   justify-content: center;
   align-items: center;
-  margin: 50px;
+  margin: 20px;
   z-index: 10;
   position: absolute;
   background-color: rgba(238, 240, 241, 0.5);
@@ -15,17 +15,39 @@
   width: 10dvw;
 }
 
+.number {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-size: 25px;
+  top: 250px;
+  left: 0px;
+  width: 10dvw;
+}
+
+.number h3 {
+  font-weight: 600;
+  font-size: 20px;
+  margin-top: 0.7rem;
+  margin-bottom: 0.7rem;
+  margin-left: 12px;
+}
+
 .vector {
   display: inherit;
   justify-content: center;
   align-items: center;
-  margin: 50px;
+  margin: 10px;
   z-index: 10;
   position: absolute;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-  top: 150px;
-  left: 200px;
-  width: 20dvw;
+  top: 0px;
+  left: 13dvw;
+  width: 15dvw;
 }
 
 .controls h2 {
@@ -46,5 +68,12 @@
 @media (max-width: 700px) {
     .controls {
         width: 50dvw;
+    }
+    .number {
+        top: 220px;
+    }
+    .vector {
+        top: 300px;
+        left: 0px;
     }
 }

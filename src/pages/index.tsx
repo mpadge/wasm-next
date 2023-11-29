@@ -5,7 +5,6 @@ import WasmVectorMult from '../components/WasmVectorMult'
 import WasmAddTwo from '../components/WasmAddTwo'
 import Control from '../components/control'
 
-
 export default function Page() {
     const [Number1, setNumber1] = useState(10);
     const [Number2, setNumber2] = useState(10);
