@@ -7,7 +7,6 @@ export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly add_two: (a: number, b: number) => number;
   readonly mult_two: (a: number, b: number, c: number, d: number) => number;
-  readonly read_file: (a: number, b: number, c: number, d: number, e: number) => number;
   readonly get_result_len: () => number;
 }
 
