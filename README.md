@@ -1,75 +1,51 @@
 # nextjs and WebAssembly
 
 This is a modified version of the nextjs example at
-https://github.com/vercel/next.js/tree/canary/examples/with-webassembly. That
-repository illustrates a finished example. This one simply details the steps
-needed to integrate WebAssembly within an existing nextjs project. This project
-uses the directory root, `/`.
+https://github.com/vercel/next.js/tree/canary/examples/with-webassembly,
+including WebAssembly module generated from a rust crate, instead of the simple
+`.rs` file used in the Vercel example.
 
-Both this repository and the demonstration one from Vercel use pre-compiled
-wasm binaries that are added to a commit and uploaded directly to GitHub and
-therefore Vercel. It is also possible to use the community-supported [rust
-runtime](https://github.com/vercel-community/rust). The general procedure is:
+The crate is defined in [the `/wasm`
+directory](https://github.com/mpadge/wasm-next/tree/main/wasm), and built with
+the [npm script, `npm run
+build-crate`](https://github.com/mpadge/wasm-next/blob/19f1678998e228c172d061b2c1fbbad701a65a96/package.json#L7).
+This command compiles the WebAssembly binary module in the [`./pkg`
+directory](https://github.com/mpadge/wasm-next/tree/main/pkg). (This location
+must also be specified in
+[`next.config.js`](https://github.com/mpadge/wasm-next/blob/main/next.config.js).)
+All files in this directory, including the compiled binary, are then committed
+with this repository, and the whole site built with `npm run build`. (Compiling
+binaries on a server requires the community-supported [rust
+runtime](https://github.com/vercel-community/rust).)
 
-1. Define your rust function. The one used here is in a [`/src`
-   directory](https://github.com/mpadge/wasm-next/tree/main/src):
+## WebAssembly interfaces from rust
 
-    ``` rust
-    #[no_mangle]
-    pub extern "C" fn add_two(x: i32, y:i32) -> i32 {
-        x + y
-    }
-    ```
-    where the "no_mangle" tells the compiler to keep the function name so it
-    can be called in JavaScript, and the `extern "C"` tells the compiler to use
-    the C Applicaiton Binary Interface (ABI), so the compiled binary can be
-    called from JavaScript.
-2. Add a line to the "scripts" of `package.json` to build the wasm binary:
-   ```
-   "build-rust": "rustc --target wasm32-unknown-unknown -O --crate-type=cdylib src/add.rs -o wasm/add.wasm"
-   ```
-   That builds the binary `add.wasm` in a `wasm` sub-directory. Building
-   directly in the project root will generally not work, and any changes to
-   sub-directory name must also be mapped in
-   [`next.config.js`](https://github.com/mpadge/wasm-next/blob/main/next.config.js#L8-L9).
-   Running the "build-rust" script on the server requires the [rust runtime](https://github.com/vercel-community/rust), whereas directly committing the compiled binary avoids this requirement.
-3. Add a typescript rust component, like [`components/RustComponent2.tsx`
-   here](https://github.com/mpadge/wasm-next/blob/main/components/RustComponent2.tsx).
-   That component imports an interface defined here in
-   [`wasm.d.ts`](https://github.com/mpadge/wasm-next/blob/main/wasm.d.ts)
-   called 'AddModuleExports'. The wasm binary compiled to `wasm/add.wasm` in
-   the previous step is imported in the component on [Line
-   12](https://github.com/mpadge/wasm-next/blob/main/components/RustComponent2.tsx#L12).
-4. In the target page where the rust function is to be called, import the
-   component defined in the previous step, and then simply add that component.
-   That page in this case is
-   [`pages/index.tsx`](https://github.com/mpadge/wasm-next/blob/main/pages/index.tsx).
+The main rust function added here is [`mult_two` in
+`wasm/src/lib.rs`](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs).
+This function demonstrates how to pass vectors between JavaScript and Rust: as
+a pointer to the start of the vector in memory, and an integer defining the
+length of the vector. The vectors may then be assembled in rust as on [lines
+13-14](
+`wasm/src/lib.rs`](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs#L13-L14).
 
-## Adding additional rust functions
+To return vectors from rust, they must first be converted to pointers as on
+[line
+21](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs#L21), and the
+vector itself then [removed from memory in
+rust](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs#L25).
+Accessing the vectors from JavaScript requires both the pointer to the start of
+the vector, and it's length. This length is recorded in the mutable global
+variable defined at the [start of
+`lib.rs`](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs#L6).
+The value of this variable may then be queries using the additionally exported
+function,
+[`get_result_len()`](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs#L31-L33).
 
-Each additional function can be defined within the same `src/add.rs` file (or
-elsewhere), but should be exported within separate components. Those exports
-can then be imported on whatever page or component they'll be used, and called
-directly from there.
+## Accessing WebAssembly from JavaScript
 
-### Adding crates
-
-Entire crates can also be bundled and compiled to WebAssembly. Compilation then
-requires the [wasm-pack](https://github.com/rustwasm/wasm-pack) tool, which can
-be called from `npm` by adding the following line (as a "script") to
-`package.json`:
-```
-"build-crate": "cd src && wasm-pack build --target web --out-dir ../wasm",
-```
-The final `--out-dir` flag specifies the directory where the wasm binary will
-be created. Generation of WASM binaries also requires modifying `Cargo.toml`
-files by adding the following lines:
-```
-[lib]
-crate-type = ["cdylib"]
-```
-or possibly:
-```
-[lib]
-crate-type = ["cdylib", "rlib"]
-```
+The function used to pass vectors from JavaScript to Rust is in
+[`src/components/WasmVectorMult.tsx`](https://github.com/mpadge/wasm-next/blob/main/src/components/WasmVectorMult.tsx).
+This file should be reasonably self-explanatory, but it is important to note
+that the `allocateSpaceForVector` function is hard-coded for vectors of `f64`
+values, and would need to be modified to allocate space for storing any other
+kind of elements.
