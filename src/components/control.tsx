@@ -4,7 +4,7 @@ import Select from 'react-select';
 import Link from 'next/link'
 import Image from 'next/image'
 
-import styles from '../styles/controls.module.css';
+import styles from '../styles/styles.module.css';
 
 interface ControlProps {
     number1: number,

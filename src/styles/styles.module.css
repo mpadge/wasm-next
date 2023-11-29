@@ -15,24 +15,23 @@
   width: 10dvw;
 }
 
-
-.controls p {
-  position: relative;
-  margin: 0;
-  padding: 1rem;
+.vector {
+  display: inherit;
+  justify-content: center;
+  align-items: center;
+  margin: 50px;
+  z-index: 10;
+  position: absolute;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  top: 150px;
+  left: 200px;
+  width: 20dvw;
 }
 
 .controls h2 {
   font-weight: 600;
   margin-top: 0.7rem;
   margin-bottom: 0.7rem;
-  margin-left: 12px;
-}
-
-.controls h3 {
-  font-weight: 400;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
   margin-left: 12px;
 }
 
