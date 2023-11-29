@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react';
 import Link from 'next/link'
-import VectorMult from '../components/WasmVectorMult'
+import WasmVectorMult from '../components/WasmVectorMult'
 import WasmAddTwo from '../components/WasmAddTwo'
 import Control from '../components/control'
 
@@ -34,7 +34,7 @@ export default function Page() {
             handleNumber2Change={setNumber2}
         />
         <WasmAddTwo number1={Number1} number2={Number2} />
-        <VectorMult vector1={Vector1} vector2={Vector2} />
+        <WasmVectorMult vector1={Vector1} vector2={Vector2} />
         </div>
         </>
     )

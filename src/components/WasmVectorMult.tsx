@@ -22,7 +22,7 @@ function allocateSpaceForVector(vector: Float64Array, memory: WebAssembly.Memory
   return ptr;
 }
 
-const VectorMult = dynamic({
+const WasmVectorMult = dynamic({
   loader: async () => {
     // @ts-ignore
     const { mult_two: multTwo } = (await import('@/../pkg/testcrate_bg.wasm')) as MultTwoExports
@@ -62,4 +62,4 @@ const VectorMult = dynamic({
     ssr: false
 })
 
-export default VectorMult
+export default WasmVectorMult
