@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 
 import styles from '../styles/vector.module.css';
 
-interface RustComponentProps {
+interface VectorMultProps {
   vector1: Float64Array
   vector2: Float64Array
 }
@@ -22,14 +22,14 @@ function allocateSpaceForVector(vector: Float64Array, memory: WebAssembly.Memory
   return ptr;
 }
 
-const RustComponent = dynamic({
+const VectorMult = dynamic({
   loader: async () => {
     // @ts-ignore
     const { mult_two: multTwo } = (await import('@/../pkg/testcrate_bg.wasm')) as MultTwoExports
 
     const { mult_two, get_result_len, memory } = await import('@/../pkg/testcrate_bg.wasm');
 
-    const Component = ({ vector1, vector2 }: RustComponentProps) => {
+    const Component = ({ vector1, vector2 }: VectorMultProps) => {
 
         // Allocate space in the Wasm memory for the input vectors and copy the vectors into it
         const ptr1 = allocateSpaceForVector(vector1, memory);
@@ -62,4 +62,4 @@ const RustComponent = dynamic({
     ssr: false
 })
 
-export default RustComponent
+export default VectorMult

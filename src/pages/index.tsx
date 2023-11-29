@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react';
 import Link from 'next/link'
-import RustComponent from '../components/RustComponent'
+import VectorMult from '../components/WasmVectorMult'
 import RustComponent2 from '../components/RustComponent2'
 import Control from '../components/control'
 
@@ -34,7 +34,7 @@ export default function Page() {
             handleNumber2Change={setNumber2}
         />
         <RustComponent2 number1={Number1} number2={Number2} />
-        <RustComponent vector1={Vector1} vector2={Vector2} />
+        <VectorMult vector1={Vector1} vector2={Vector2} />
         </div>
         </>
     )
