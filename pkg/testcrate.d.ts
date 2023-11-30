@@ -1,5 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
+/**
+* @param {string} data1
+* @param {string} data2
+* @param {string} varname
+* @param {number} nentries
+*/
+export function parse_json(data1: string, data2: string, varname: string, nentries: number): void;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
@@ -8,6 +15,10 @@ export interface InitOutput {
   readonly add_two: (a: number, b: number) => number;
   readonly mult_two: (a: number, b: number, c: number, d: number) => number;
   readonly get_result_len: () => number;
+  readonly parse_json: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => void;
+  readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
+  readonly __wbindgen_malloc: (a: number, b: number) => number;
+  readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;
