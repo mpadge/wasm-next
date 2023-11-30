@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react';
 import Link from 'next/link'
-import WasmVectorMult from '../components/WasmVectorMult'
 import WasmAddTwo from '../components/WasmAddTwo'
+import WasmVectorMult from '../components/WasmVectorMult'
+import WasmJson from '../components/WasmJson'
 import Control from '../components/control'
 
 export default function Page() {
@@ -19,7 +20,8 @@ export default function Page() {
     const Vector1 = Float64Array.from({ length: 5 }, () => Math.random());
     const Vector2 = Float64Array.from({ length: 5 }, () => Math.random());
 
-    const filename = "/data/dat1.json";
+    const filename1 = "/data/dat1.json";
+    const filename2 = "/data/dat2.json";
     const varname = "bike_index";
     const nentries = 10;
 
@@ -34,6 +36,7 @@ export default function Page() {
         />
         <WasmAddTwo number1={Number1} number2={Number2} />
         <WasmVectorMult vector1={Vector1} vector2={Vector2} />
+        <WasmJson filename1={filename1} filename2={filename2} varname={varname} nentries={nentries} />
         </div>
         </>
     )
