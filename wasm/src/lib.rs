@@ -1,3 +1,6 @@
+use wasm_bindgen::prelude::*;
+use serde_json::Value;
+
 #[no_mangle]
 pub extern "C" fn add_two(x: i32, y:i32) -> i32 {
     x + y
@@ -30,4 +33,16 @@ pub extern "C" fn mult_two(x: *const f64, len_x: usize, y: *const f64, len_y: us
 #[no_mangle]
 pub extern "C" fn get_result_len() -> usize {
     unsafe { RESULT_LEN }
+}
+
+#[wasm_bindgen]
+pub fn parse_json(data1: &str, data2: &str, varname: &str, nentries: usize) -> Result<(), JsValue> {
+    let v1: Value = serde_json::from_str(data1)
+        .map_err(|e| JsValue::from_str(&e.to_string()))?;
+    let v2: Value = serde_json::from_str(data2)
+        .map_err(|e| JsValue::from_str(&e.to_string()))?;
+
+    // TODO: Process v1 and v2
+
+    Ok(())
 }
