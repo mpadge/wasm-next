@@ -2,9 +2,8 @@
   "private": true,
   "scripts": {
     "dev": "next",
-    "build-rust": "rustc --target wasm32-unknown-unknown -O --crate-type=cdylib src/add.rs -o wasm/add.wasm",
     "build": "next build",
-    "build-crate": "wasm-pack build wasm --target web --out-dir ../pkg",
+    "build:wasm": "wasm-pack build wasm --target web --out-dir ../pkg",
     "start": "next start"
   },
   "dependencies": {
