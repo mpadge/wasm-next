@@ -1,5 +1,5 @@
-import type { InitOutput } from '@/../pkg/testcrate';
-import { initSync } from '@/../pkg/testcrate.js';
+// import { initSync, parse_json } from '@/../pkg/testcrate.js';
+// import { initSync } from '@/../pkg/testcrate.js';
 
 import dynamic from 'next/dynamic'
 import { useEffect, useState} from 'react';
@@ -33,7 +33,15 @@ const WasmJson = dynamic({
         loadData();
       }, [filename1, filename2]);
 
-      // TODO: Pass data1 and data2 to your wasm function
+      useEffect(() => {
+        // initSync();
+        if (data1 && data2) {
+          // parse_json(JSON.stringify(data1), JSON.stringify(data2));
+          // parse_json();
+        }
+      }, [data1, data2]);
+
+      // ...
 
       return (
         <div className={styles.json}>
