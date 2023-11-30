@@ -113,19 +113,15 @@ function takeObject(idx) {
 /**
 * @param {string} data1
 * @param {string} data2
-* @param {string} varname
-* @param {number} nentries
 */
-export function parse_json(data1, data2, varname, nentries) {
+export function parse_json(data1, data2) {
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
         const ptr0 = passStringToWasm0(data1, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         const len0 = WASM_VECTOR_LEN;
         const ptr1 = passStringToWasm0(data2, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         const len1 = WASM_VECTOR_LEN;
-        const ptr2 = passStringToWasm0(varname, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
-        const len2 = WASM_VECTOR_LEN;
-        wasm.parse_json(retptr, ptr0, len0, ptr1, len1, ptr2, len2, nentries);
+        wasm.parse_json(retptr, ptr0, len0, ptr1, len1);
         var r0 = getInt32Memory0()[retptr / 4 + 0];
         var r1 = getInt32Memory0()[retptr / 4 + 1];
         if (r1) {

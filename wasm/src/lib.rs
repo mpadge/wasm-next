@@ -36,10 +36,11 @@ pub extern "C" fn get_result_len() -> usize {
 }
 
 #[wasm_bindgen]
-pub fn parse_json(data1: &str, data2: &str, varname: &str, nentries: usize) -> Result<(), JsValue> {
-    let v1: Value = serde_json::from_str(data1)
+// pub fn parse_json(data1: &str, data2: &str, varname: &str, nentries: usize) -> Result<(), JsValue> {
+pub fn parse_json(data1: &str, data2: &str) -> Result<(), JsValue> {
+    let _v1: Value = serde_json::from_str(data1)
         .map_err(|e| JsValue::from_str(&e.to_string()))?;
-    let v2: Value = serde_json::from_str(data2)
+    let _v2: Value = serde_json::from_str(data2)
         .map_err(|e| JsValue::from_str(&e.to_string()))?;
 
     // TODO: Process v1 and v2
