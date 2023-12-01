@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "build:wasm": "wasm-pack build wasm --target web --out-dir ../pkg",
+    "build:wasm": "wasm-pack build wasm --target web --out-dir ../pkg && cp ./pkg/*.wasm ./public/pkg/",
     "start": "next start"
   },
   "dependencies": {

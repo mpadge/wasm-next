@@ -46,7 +46,7 @@ pub fn parse_json_old(data1: &str, data2: &str) -> Result<(), JsValue> {
     Ok(())
 }
 
-// #[wasm_bindgen]
+#[wasm_bindgen]
 pub fn parse_json() -> String {
     String::from("Hello, world!")
 }

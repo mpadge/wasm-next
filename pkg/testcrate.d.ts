@@ -1,5 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
+/**
+* @returns {string}
+*/
+export function parse_json(): string;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
@@ -8,6 +12,9 @@ export interface InitOutput {
   readonly add_two: (a: number, b: number) => number;
   readonly mult_two: (a: number, b: number, c: number, d: number) => number;
   readonly get_result_len: () => number;
+  readonly parse_json: (a: number) => void;
+  readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
+  readonly __wbindgen_free: (a: number, b: number, c: number) => void;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;

@@ -1,10 +1,14 @@
 // import { initSync, parse_json } from '@/../pkg/testcrate.js';
-// import { initSync } from '@/../pkg/testcrate.js';
+import * as wasm from '@/../pkg/testcrate.js';
 
 import dynamic from 'next/dynamic'
 import { useEffect, useState} from 'react';
 
 import styles from '../styles/styles.module.css';
+
+export interface AddModuleExports {
+    parse_json(): string
+}
 
 interface JsonProps {
   filename1: string
@@ -18,6 +22,7 @@ const WasmJson = dynamic({
     const Component = ({ filename1, filename2, varname, nentries }: JsonProps) => {
       const [data1, setData1] = useState(null);
       const [data2, setData2] = useState(null);
+      const [result, setResult] = useState(null);
 
       useEffect(() => {
         const loadData = async () => {
@@ -34,18 +39,30 @@ const WasmJson = dynamic({
       }, [filename1, filename2]);
 
       useEffect(() => {
-        // initSync();
-        if (data1 && data2) {
-          // parse_json(JSON.stringify(data1), JSON.stringify(data2));
-          // parse_json();
-        }
+          console.log('Fetching wasm module...');
+          fetch('@/../pkg/testcrate_bg.wasm')
+              .then(response => {
+                  console.log('Response:', response);
+                  return response.arrayBuffer();
+              })
+              .then(bytes => {
+                  console.log('Bytes:', bytes);
+                  wasm.initSync(bytes);
+                  if (data1 && data2) {
+                      const jsonResult = wasm.parse_json();
+                      console.log('-----Json result:', jsonResult);
+                      setResult(jsonResult);
+                  }
+              })
+              .catch(error => {
+                  console.error('Error fetching wasm module:', error);
+              });
       }, [data1, data2]);
-
-      // ...
 
       return (
         <div className={styles.json}>
           <h1>Json Result</h1>
+          <p>{result}</p>
         </div>
       )
     }
