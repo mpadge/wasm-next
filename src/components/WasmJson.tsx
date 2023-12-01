@@ -22,7 +22,7 @@ const WasmJson = dynamic({
     const Component = ({ filename1, filename2, varname, nentries }: JsonProps) => {
       const [data1, setData1] = useState(null);
       const [data2, setData2] = useState(null);
-      const [result, setResult] = useState(null);
+      const [result, setResult] = useState<string | null>(null);
 
       useEffect(() => {
         const loadData = async () => {
