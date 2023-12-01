@@ -48,15 +48,31 @@ pub fn parse_json_old(data1: &str, data2: &str) -> Result<(), JsValue> {
 
 #[wasm_bindgen]
 pub fn parse_json(json: &str) -> String {
-    match serde_json::from_str::<Value>(json) {
-        Ok(v) => {
-            // TODO: Process v
+    const VARNAME: &str = "bike_index";
 
-            // Return a string
-            "Processed JSON".to_string()
+    match serde_json::from_str::<Vec<Value>>(json) {
+        Ok(rows) => {
+            let mut values: Vec<f64> = Vec::new();
+
+            for row in rows {
+                if let Value::Object(obj) = row {
+                    if let Some(Value::Number(num)) = obj.get(VARNAME) {
+                        if let Some(val) = num.as_f64() {
+                            values.push(val);
+                        } else {
+                            return format!("Error: Value for '{}' is not a valid f64", VARNAME);
+                        }
+                    } else {
+                        return format!("Error: Column '{}' not found", VARNAME);
+                    }
+                } else {
+                    return "Error: JSON structure is not an array of objects".to_string();
+                }
+            }
+
+            serde_json::to_string(&values).unwrap_or_else(|e| format!("Error: {}", e.to_string()))
         }
         Err(e) => {
-            // Handle error
             format!("Error: {}", e.to_string())
         }
     }
