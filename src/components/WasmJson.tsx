@@ -12,63 +12,62 @@ export interface AddModuleExports {
 }
 
 interface JsonProps {
-  filename1: string
-  filename2: string
-  varname: string
-  nentries: number
+filename1: string
+               filename2: string
+               varname: string
+               nentries: number
 }
 
 const WasmJson = dynamic({
-  loader: async () => {
-    const Component = ({ filename1, filename2, varname, nentries }: JsonProps) => {
-      const [data1, setData1] = useState(null);
-      const [data2, setData2] = useState(null);
-      const [result, setResult] = useState<Object | null>(null);
+    loader: async () => {
+        const Component = ({ filename1, filename2, varname, nentries }: JsonProps) => {
+            const [data1, setData1] = useState(null);
+            const [data2, setData2] = useState(null);
+            const [result, setResult] = useState<Object | null>(null);
 
-      useEffect(() => {
-        const loadData = async () => {
-          const response1 = await fetch(filename1);
-          const json1 = await response1.json();
-          setData1(json1);
+            useEffect(() => {
+                const loadData = async () => {
+                    const response1 = await fetch(filename1);
+                    const json1 = await response1.json();
+                    setData1(json1);
 
-          const response2 = await fetch(filename2);
-          const json2 = await response2.json();
-          setData2(json2);
-        };
+                    const response2 = await fetch(filename2);
+                    const json2 = await response2.json();
+                    setData2(json2);
+                };
 
-        loadData();
-      }, [filename1, filename2]);
+                loadData();
+                }, [filename1, filename2]);
 
-      useEffect(() => {
-          fetch('@/../pkg/testcrate_bg.wasm')
-              .then(response => {
-                  return response.arrayBuffer();
-              })
-              .then(bytes => {
-                  if (data1 && data2) {
-                      const thiswasm = wasm.initSync(bytes);
-                      const resultJson = wasm.parse_json(JSON.stringify(data1));
-                      const resultObj = JSON.parse(resultJson);
-                      // console.log(resultObj);
-                      setResult(resultObj);
-                }
-              })
-              .catch(error => {
-                  console.error('Error fetching wasm module:', error);
-              });
-      }, [data1, data2]);
+            useEffect(() => {
+                fetch('@/../pkg/testcrate_bg.wasm')
+                .then(response => {
+                    return response.arrayBuffer();
+                    })
+                .then(bytes => {
+                    if (data1 && data2) {
+                        const thiswasm = wasm.initSync(bytes);
+                        const resultJson = wasm.parse_json(JSON.stringify(data1));
+                        const resultObj = JSON.parse(resultJson);
+                        setResult(resultObj);
+                    }
+                    })
+                .catch(error => {
+                    console.error('Error fetching wasm module:', error);
+                    });
+                }, [data1, data2]);
 
-      return (
-          <div className={styles.json}>
-              <h1>Json Result</h1>
-              {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
-          </div>
-      )
-    }
+            return (
+                <div className={styles.json}>
+                <h1>Json Result</h1>
+                    {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
+                </div>
+            )
+        }
 
-    return Component
-  },
-  ssr: false
+        return Component
+    },
+    ssr: false
 });
 
 export default WasmJson
