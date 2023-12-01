@@ -31,20 +31,13 @@ const WasmVectorMult = dynamic({
 
     const Component = ({ vector1, vector2 }: VectorMultProps) => {
 
-        // Allocate space in the Wasm memory for the input vectors and copy the vectors into it
         const ptr1 = allocateSpaceForVector(vector1, memory);
         const ptr2 = allocateSpaceForVector(vector2, memory);
 
-        // Call mult_two and get pointer to result vector:
         const resultPtr = mult_two(ptr1, vector1.length, ptr2, vector2.length);
-
-        // get length of result vector:
         const resultLen = get_result_len();
 
-        // Create a new Float64Array view on the Wasm memory
         const resultVector = new Float64Array(memory.buffer, resultPtr, resultLen);
-
-        console.log(resultVector);
 
         return (
             <div className={styles.vector}>

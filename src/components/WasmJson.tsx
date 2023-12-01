@@ -1,5 +1,6 @@
 // import { initSync, parse_json } from '@/../pkg/testcrate.js';
 import * as wasm from '@/../pkg/testcrate.js';
+// import { initSync, get_result_len_bg, memory, parse_json } from '@/../pkg/testcrate.js';
 
 import dynamic from 'next/dynamic'
 import { useEffect, useState} from 'react';
@@ -19,10 +20,12 @@ interface JsonProps {
 
 const WasmJson = dynamic({
   loader: async () => {
+    const { memory } = await import('@/../pkg/testcrate_bg.wasm');
+
     const Component = ({ filename1, filename2, varname, nentries }: JsonProps) => {
       const [data1, setData1] = useState(null);
       const [data2, setData2] = useState(null);
-      const [result, setResult] = useState<string | null>(null);
+      const [result, setResult] = useState<Float64Array>(new Float64Array());
 
       useEffect(() => {
         const loadData = async () => {
@@ -39,20 +42,19 @@ const WasmJson = dynamic({
       }, [filename1, filename2]);
 
       useEffect(() => {
-          console.log('Fetching wasm module...');
           fetch('@/../pkg/testcrate_bg.wasm')
               .then(response => {
-                  console.log('Response:', response);
                   return response.arrayBuffer();
               })
               .then(bytes => {
-                  console.log('Bytes:', bytes);
                   wasm.initSync(bytes);
                   if (data1 && data2) {
-                      const jsonResult = wasm.parse_json(JSON.stringify(data1));
-                      console.log('-----Json result:', jsonResult);
-                      setResult(jsonResult);
-                  }
+                      const resultPtr = wasm.parse_json(JSON.stringify(data1));
+                      const resultLen = wasm.get_result_len_bg();
+                      console.log("------" + resultLen);
+                      const resultVector = new Float64Array(memory.buffer, resultPtr, resultLen);
+                      setResult(resultVector);
+                }
               })
               .catch(error => {
                   console.error('Error fetching wasm module:', error);
@@ -60,10 +62,12 @@ const WasmJson = dynamic({
       }, [data1, data2]);
 
       return (
-        <div className={styles.json}>
-          <h1>Json Result</h1>
-          <p>{result}</p>
-        </div>
+          <div className={styles.json}>
+              <h1>Json Result</h1>
+              {result && Array.from(result).map((value: number, index: number) => (
+                  <div key={index}>{value}</div>
+              ))}
+          </div>
       )
     }
 

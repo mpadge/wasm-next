@@ -7,6 +7,7 @@ pub extern "C" fn add_two(x: i32, y:i32) -> i32 {
 }
 
 static mut RESULT_LEN: usize = 0;
+static mut RESULT_LEN_BG: usize = 0;
 
 /// Function to multiply two vectors
 #[no_mangle]
@@ -35,45 +36,49 @@ pub extern "C" fn get_result_len() -> usize {
     unsafe { RESULT_LEN }
 }
 
-pub fn parse_json_old(data1: &str, data2: &str) -> Result<(), JsValue> {
-    let _v1: Value = serde_json::from_str(data1)
-        .map_err(|e| JsValue::from_str(&e.to_string()))?;
-    let _v2: Value = serde_json::from_str(data2)
-        .map_err(|e| JsValue::from_str(&e.to_string()))?;
-
-    // TODO: Process v1 and v2
-
-    Ok(())
+#[wasm_bindgen]
+pub fn get_result_len_bg() -> usize {
+    unsafe { RESULT_LEN_BG }
 }
 
 #[wasm_bindgen]
-pub fn parse_json(json: &str) -> String {
+pub fn parse_json(json: &str) -> *const f64 {
     const VARNAME: &str = "bike_index";
+    const VEC_IS_ERR: Vec<f64> = Vec::new();
+    const NVALUES: usize = 10;
 
+    let mut values: Vec<f64> = Vec::new();
     match serde_json::from_str::<Vec<Value>>(json) {
         Ok(rows) => {
-            let mut values: Vec<f64> = Vec::new();
 
             for row in rows {
                 if let Value::Object(obj) = row {
                     if let Some(Value::Number(num)) = obj.get(VARNAME) {
                         if let Some(val) = num.as_f64() {
-                            values.push(val);
-                        } else {
-                            return format!("Error: Value for '{}' is not a valid f64", VARNAME);
+                            if values.len() < NVALUES {
+                                values.push(val);
+                            }
                         }
-                    } else {
-                        return format!("Error: Column '{}' not found", VARNAME);
                     }
-                } else {
-                    return "Error: JSON structure is not an array of objects".to_string();
                 }
             }
 
-            serde_json::to_string(&values).unwrap_or_else(|e| format!("Error: {}", e.to_string()))
         }
-        Err(e) => {
-            format!("Error: {}", e.to_string())
+        Err(_e) => {
+            let _ = Vec::<f64>::new();
         }
     }
+
+    let mut result = Vec::with_capacity(values.len());
+    for i in 0..values.len() {
+        result.push(values[i]);
+    }
+
+    let ptr = result.as_mut_ptr();
+    unsafe {
+        RESULT_LEN_BG = result.len();
+    }
+    std::mem::forget(result);
+
+    ptr
 }
