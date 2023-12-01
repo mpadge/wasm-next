@@ -20,8 +20,6 @@ interface JsonProps {
 
 const WasmJson = dynamic({
   loader: async () => {
-    const { memory } = await import('@/../pkg/testcrate_bg.wasm');
-
     const Component = ({ filename1, filename2, varname, nentries }: JsonProps) => {
       const [data1, setData1] = useState(null);
       const [data2, setData2] = useState(null);
@@ -47,12 +45,11 @@ const WasmJson = dynamic({
                   return response.arrayBuffer();
               })
               .then(bytes => {
-                  wasm.initSync(bytes);
                   if (data1 && data2) {
+                      const thiswasm = wasm.initSync(bytes);
                       const resultPtr = wasm.parse_json(JSON.stringify(data1));
                       const resultLen = wasm.get_result_len_bg();
-                      console.log("------" + resultLen);
-                      const resultVector = new Float64Array(memory.buffer, resultPtr, resultLen);
+                      const resultVector = new Float64Array(thiswasm.memory.buffer, resultPtr, resultLen);
                       setResult(resultVector);
                 }
               })
