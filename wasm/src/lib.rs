@@ -7,7 +7,6 @@ pub extern "C" fn add_two(x: i32, y:i32) -> i32 {
 }
 
 static mut RESULT_LEN: usize = 0;
-static mut RESULT_LEN_BG: usize = 0;
 
 /// Function to multiply two vectors
 #[no_mangle]
@@ -34,11 +33,6 @@ pub extern "C" fn mult_two(x: *const f64, len_x: usize, y: *const f64, len_y: us
 #[no_mangle]
 pub extern "C" fn get_result_len() -> usize {
     unsafe { RESULT_LEN }
-}
-
-#[wasm_bindgen]
-pub fn get_result_len_bg() -> usize {
-    unsafe { RESULT_LEN_BG }
 }
 
 #[wasm_bindgen]

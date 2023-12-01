@@ -1,10 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
-* @returns {number}
-*/
-export function get_result_len_bg(): number;
-/**
 * @param {string} json
 * @returns {string}
 */
@@ -17,7 +13,6 @@ export interface InitOutput {
   readonly add_two: (a: number, b: number) => number;
   readonly mult_two: (a: number, b: number, c: number, d: number) => number;
   readonly get_result_len: () => number;
-  readonly get_result_len_bg: () => number;
   readonly parse_json: (a: number, b: number, c: number) => void;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
   readonly __wbindgen_malloc: (a: number, b: number) => number;

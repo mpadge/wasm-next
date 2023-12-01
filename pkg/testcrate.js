@@ -1,13 +1,5 @@
 let wasm;
 
-/**
-* @returns {number}
-*/
-export function get_result_len_bg() {
-    const ret = wasm.get_result_len_bg();
-    return ret >>> 0;
-}
-
 let WASM_VECTOR_LEN = 0;
 
 let cachedUint8Memory0 = null;
