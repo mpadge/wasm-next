@@ -47,6 +47,17 @@ pub fn parse_json_old(data1: &str, data2: &str) -> Result<(), JsValue> {
 }
 
 #[wasm_bindgen]
-pub fn parse_json() -> String {
-    String::from("Hello, world!")
+pub fn parse_json(json: &str) -> String {
+    match serde_json::from_str::<Value>(json) {
+        Ok(v) => {
+            // TODO: Process v
+
+            // Return a string
+            "Processed JSON".to_string()
+        }
+        Err(e) => {
+            // Handle error
+            format!("Error: {}", e.to_string())
+        }
+    }
 }

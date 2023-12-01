@@ -49,7 +49,7 @@ const WasmJson = dynamic({
                   console.log('Bytes:', bytes);
                   wasm.initSync(bytes);
                   if (data1 && data2) {
-                      const jsonResult = wasm.parse_json();
+                      const jsonResult = wasm.parse_json(JSON.stringify(data1));
                       console.log('-----Json result:', jsonResult);
                       setResult(jsonResult);
                   }
