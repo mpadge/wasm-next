@@ -42,7 +42,7 @@ pub fn get_result_len_bg() -> usize {
 }
 
 #[wasm_bindgen]
-pub fn parse_json(json: &str) -> *const f64 {
+pub fn parse_json(json: &str) -> String {
     const VARNAME: &str = "bike_index";
     const VEC_IS_ERR: Vec<f64> = Vec::new();
     const NVALUES: usize = 10;
@@ -69,16 +69,5 @@ pub fn parse_json(json: &str) -> *const f64 {
         }
     }
 
-    let mut result = Vec::with_capacity(values.len());
-    for i in 0..values.len() {
-        result.push(values[i]);
-    }
-
-    let ptr = result.as_mut_ptr();
-    unsafe {
-        RESULT_LEN_BG = result.len();
-    }
-    std::mem::forget(result);
-
-    ptr
+    serde_json::to_string(&values).unwrap()
 }

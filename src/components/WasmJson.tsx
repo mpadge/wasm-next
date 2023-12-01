@@ -23,7 +23,7 @@ const WasmJson = dynamic({
     const Component = ({ filename1, filename2, varname, nentries }: JsonProps) => {
       const [data1, setData1] = useState(null);
       const [data2, setData2] = useState(null);
-      const [result, setResult] = useState<Float64Array>(new Float64Array());
+      const [result, setResult] = useState<Object | null>(null);
 
       useEffect(() => {
         const loadData = async () => {
@@ -47,10 +47,10 @@ const WasmJson = dynamic({
               .then(bytes => {
                   if (data1 && data2) {
                       const thiswasm = wasm.initSync(bytes);
-                      const resultPtr = wasm.parse_json(JSON.stringify(data1));
-                      const resultLen = wasm.get_result_len_bg();
-                      const resultVector = new Float64Array(thiswasm.memory.buffer, resultPtr, resultLen);
-                      setResult(resultVector);
+                      const resultJson = wasm.parse_json(JSON.stringify(data1));
+                      const resultObj = JSON.parse(resultJson);
+                      // console.log(resultObj);
+                      setResult(resultObj);
                 }
               })
               .catch(error => {
@@ -61,9 +61,7 @@ const WasmJson = dynamic({
       return (
           <div className={styles.json}>
               <h1>Json Result</h1>
-              {result && Array.from(result).map((value: number, index: number) => (
-                  <div key={index}>{value}</div>
-              ))}
+              {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
           </div>
       )
     }
