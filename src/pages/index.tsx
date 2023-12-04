@@ -3,8 +3,9 @@ import { useState } from 'react';
 import Link from 'next/link'
 import WasmAddTwo from '../components/WasmAddTwo'
 import WasmVectorMult from '../components/WasmVectorMult'
-import WasmBindGen from '../components/WasmBindGen'
+import WasmBindGenCalc from '../components/WasmBindGen'
 import Control from '../components/control'
+import styles from '@/styles/styles.module.css';
 
 export default function Page() {
     const [Number1, setNumber1] = useState(10);
@@ -14,6 +15,11 @@ export default function Page() {
     }
     const handleNumber2Change = (value: string) => {
         setNumber2(Number(value));
+    }
+
+    const [Result, setResult] = useState(null);
+    const handleResultChange = (Object: any) => {
+        setResult(Object);
     }
 
     // Initialize vectors for calling mult_two fn:
@@ -36,7 +42,11 @@ export default function Page() {
         />
         <WasmAddTwo number1={Number1} number2={Number2} />
         <WasmVectorMult vector1={Vector1} vector2={Vector2} />
-        <WasmBindGen filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} />
+        <div className={styles.json}>
+            <WasmBindGenCalc filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} handleResultChange={handleResultChange} />
+            <h1>BindGen Result</h1>
+                {Result && <pre>{JSON.stringify(Result, null, 2)}</pre>}
+        </div>
         </div>
         </>
     )

@@ -14,14 +14,14 @@ interface BindGenProps {
     filename2: string
     varnames: string[]
     nentries: number
+    handleResultChange: (Object: any) => void
 }
 
-const WasmBindGen = dynamic({
+const WasmBindGenCalc = dynamic({
     loader: async () => {
-        const Component = ({ filename1, filename2, varnames, nentries }: BindGenProps) => {
+        const Component = ({ filename1, filename2, varnames, nentries, handleResultChange }: BindGenProps) => {
             const [data1, setData1] = useState(null);
             const [data2, setData2] = useState(null);
-            const [result, setResult] = useState<Object | null>(null);
 
             useEffect(() => {
                 const loadData = async () => {
@@ -48,7 +48,7 @@ const WasmBindGen = dynamic({
                         const varname = varnames.join(",");
                         const resultJson = wasm_js.parse_json(JSON.stringify(data1), JSON.stringify(data2), varname, nentries);
                         const resultObj = JSON.parse(resultJson);
-                        setResult(resultObj);
+                        handleResultChange(resultObj);
                     }
                     })
                 .catch(error => {
@@ -56,12 +56,6 @@ const WasmBindGen = dynamic({
                     });
                 }, [data1, data2]);
 
-            return (
-                <div className={styles.json}>
-                <h1>BindGen Result</h1>
-                    {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
-                </div>
-            )
         }
 
         return Component
@@ -69,4 +63,4 @@ const WasmBindGen = dynamic({
     ssr: false
 });
 
-export default WasmBindGen
+export default WasmBindGenCalc;
