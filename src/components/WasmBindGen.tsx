@@ -11,16 +11,16 @@ export interface AddModuleExports {
     parse_json(): string
 }
 
-interface JsonProps {
+interface BindGenProps {
 filename1: string
     filename2: string
     varname: string
     nentries: number
 }
 
-const WasmJson = dynamic({
+const WasmBindGen = dynamic({
     loader: async () => {
-        const Component = ({ filename1, filename2, varname, nentries }: JsonProps) => {
+        const Component = ({ filename1, filename2, varname, nentries }: BindGenProps) => {
             const [data1, setData1] = useState(null);
             const [data2, setData2] = useState(null);
             const [result, setResult] = useState<Object | null>(null);
@@ -59,7 +59,7 @@ const WasmJson = dynamic({
 
             return (
                 <div className={styles.json}>
-                <h1>Json Result</h1>
+                <h1>BindGen Result</h1>
                     {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
                 </div>
             )
@@ -70,4 +70,4 @@ const WasmJson = dynamic({
     ssr: false
 });
 
-export default WasmJson
+export default WasmBindGen

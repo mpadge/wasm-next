@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link'
 import WasmAddTwo from '../components/WasmAddTwo'
 import WasmVectorMult from '../components/WasmVectorMult'
-import WasmJson from '../components/WasmJson'
+import WasmBindGen from '../components/WasmBindGen'
 import Control from '../components/control'
 
 export default function Page() {
@@ -36,7 +36,7 @@ export default function Page() {
         />
         <WasmAddTwo number1={Number1} number2={Number2} />
         <WasmVectorMult vector1={Vector1} vector2={Vector2} />
-        <WasmJson filename1={filename1} filename2={filename2} varname={varname} nentries={nentries} />
+        <WasmBindGen filename1={filename1} filename2={filename2} varname={varname} nentries={nentries} />
         </div>
         </>
     )
