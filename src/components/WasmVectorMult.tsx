@@ -1,5 +1,3 @@
-import type { InitOutput } from '@/../pkg/testcrate';
-import { initSync } from '@/../pkg/testcrate.js';
 import dynamic from 'next/dynamic'
 
 import styles from '../styles/styles.module.css';
