@@ -36,10 +36,9 @@ pub extern "C" fn get_result_len() -> usize {
 }
 
 #[wasm_bindgen]
-pub fn parse_json(json1: &str, _json2: &str, _varname: &str, _nentries: usize) -> String {
+pub fn parse_json(json1: &str, _json2: &str, _varname: &str, nentries: usize) -> String {
     const VARNAME: &str = "bike_index";
     const VEC_IS_ERR: Vec<f64> = Vec::new();
-    const NVALUES: usize = 10;
 
     let mut values: Vec<f64> = Vec::new();
     match serde_json::from_str::<Vec<Value>>(json1) {
@@ -49,7 +48,7 @@ pub fn parse_json(json1: &str, _json2: &str, _varname: &str, _nentries: usize) -
                 if let Value::Object(obj) = row {
                     if let Some(Value::Number(num)) = obj.get(VARNAME) {
                         if let Some(val) = num.as_f64() {
-                            if values.len() < NVALUES {
+                            if values.len() < nentries {
                                 values.push(val);
                             }
                         }

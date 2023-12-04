@@ -23,7 +23,7 @@ export default function Page() {
     const filename1 = "/data/dat1.json";
     const filename2 = "/data/dat2.json";
     const varname = "bike_index";
-    const nentries = 10;
+    const nentries = 5;
 
     return (
         <>
