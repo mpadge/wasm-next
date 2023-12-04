@@ -1,6 +1,4 @@
-// import { initSync, parse_json } from '@/../pkg/testcrate.js';
-import * as wasm from '@/../pkg/testcrate.js';
-// import { initSync, get_result_len_bg, memory, parse_json } from '@/../pkg/testcrate.js';
+import * as wasm_js from '@/../pkg/testcrate.js';
 
 import dynamic from 'next/dynamic'
 import { useEffect, useState} from 'react';
@@ -46,8 +44,8 @@ const WasmBindGen = dynamic({
                     })
                 .then(bytes => {
                     if (data1 && data2) {
-                        const thiswasm = wasm.initSync(bytes);
-                        const resultJson = wasm.parse_json(JSON.stringify(data1), JSON.stringify(data2), varname, nentries);
+                        const wasm_binary = wasm_js.initSync(bytes);
+                        const resultJson = wasm_js.parse_json(JSON.stringify(data1), JSON.stringify(data2), varname, nentries);
                         const resultObj = JSON.parse(resultJson);
                         setResult(resultObj);
                     }
