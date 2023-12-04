@@ -1,9 +1,10 @@
-# nextjs and WebAssembly
+# nextjs, WebAssembly, and wasm-bindgen
 
 This repository demonstrates how to access WebAssembly compiled from rust in a
-nextjs frontend. The result is currently in action at
-https://wasm-next-xi.vercel.app, which shows three output panels from three
-difference WebAssembly interfaces:
+nextjs frontend, both with and without
+[`wasm-bindgen`](https://github.com/rustwasm/wasm-bindgen). The result is
+currently in action at https://wasm-next-xi.vercel.app, which shows three
+output panels from three difference WebAssembly interfaces:
 
 ## 1. Simple WebAssembly processing of single numeric inputs
 
