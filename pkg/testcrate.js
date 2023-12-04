@@ -83,19 +83,19 @@ function getStringFromWasm0(ptr, len) {
 }
 /**
 * @param {string} json1
-* @param {string} _json2
+* @param {string} json2
 * @param {string} varname
 * @param {number} nentries
 * @returns {string}
 */
-export function parse_json(json1, _json2, varname, nentries) {
+export function parse_json(json1, json2, varname, nentries) {
     let deferred4_0;
     let deferred4_1;
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
         const ptr0 = passStringToWasm0(json1, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         const len0 = WASM_VECTOR_LEN;
-        const ptr1 = passStringToWasm0(_json2, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const ptr1 = passStringToWasm0(json2, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         const len1 = WASM_VECTOR_LEN;
         const ptr2 = passStringToWasm0(varname, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         const len2 = WASM_VECTOR_LEN;

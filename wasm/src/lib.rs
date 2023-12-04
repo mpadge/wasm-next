@@ -35,12 +35,10 @@ pub extern "C" fn get_result_len() -> usize {
     unsafe { RESULT_LEN }
 }
 
-#[wasm_bindgen]
-pub fn parse_json(json1: &str, _json2: &str, varname: &str, nentries: usize) -> String {
-    const VEC_IS_ERR: Vec<f64> = Vec::new();
-
+fn read_one_json(json: &str, varname: &str, nentries: usize) -> Vec<f64> {
     let mut values: Vec<f64> = Vec::new();
-    match serde_json::from_str::<Vec<Value>>(json1) {
+
+    match serde_json::from_str::<Vec<Value>>(json) {
         Ok(rows) => {
 
             for row in rows {
@@ -61,5 +59,15 @@ pub fn parse_json(json1: &str, _json2: &str, varname: &str, nentries: usize) -> 
         }
     }
 
-    serde_json::to_string(&values).unwrap()
+    values
+}
+
+#[wasm_bindgen]
+pub fn parse_json(json1: &str, json2: &str, varname: &str, nentries: usize) -> String {
+    const VEC_IS_ERR: Vec<f64> = Vec::new();
+
+    let values1 = read_one_json(json1, varname, nentries);
+    let _values2 = read_one_json(json2, varname, nentries);
+
+    serde_json::to_string(&values1).unwrap()
 }
