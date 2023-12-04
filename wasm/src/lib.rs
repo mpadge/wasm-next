@@ -36,8 +36,7 @@ pub extern "C" fn get_result_len() -> usize {
 }
 
 #[wasm_bindgen]
-pub fn parse_json(json1: &str, _json2: &str, _varname: &str, nentries: usize) -> String {
-    const VARNAME: &str = "bike_index";
+pub fn parse_json(json1: &str, _json2: &str, varname: &str, nentries: usize) -> String {
     const VEC_IS_ERR: Vec<f64> = Vec::new();
 
     let mut values: Vec<f64> = Vec::new();
@@ -46,7 +45,7 @@ pub fn parse_json(json1: &str, _json2: &str, _varname: &str, nentries: usize) ->
 
             for row in rows {
                 if let Value::Object(obj) = row {
-                    if let Some(Value::Number(num)) = obj.get(VARNAME) {
+                    if let Some(Value::Number(num)) = obj.get(varname) {
                         if let Some(val) = num.as_f64() {
                             if values.len() < nentries {
                                 values.push(val);

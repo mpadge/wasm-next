@@ -3,11 +3,11 @@
 /**
 * @param {string} json1
 * @param {string} _json2
-* @param {string} _varname
+* @param {string} varname
 * @param {number} nentries
 * @returns {string}
 */
-export function parse_json(json1: string, _json2: string, _varname: string, nentries: number): string;
+export function parse_json(json1: string, _json2: string, varname: string, nentries: number): string;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
