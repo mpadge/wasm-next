@@ -1,51 +1,85 @@
 # nextjs and WebAssembly
 
-This is a modified version of the nextjs example at
+This repository demonstrates how to access WebAssembly compiled from rust in a
+nextjs frontend. The result is currently in action at
+https://wasm-next-xi.vercel.app, which shows three output panels from three
+difference WebAssembly interfaces:
+
+## 1. Simple WebAssembly processing of single numeric inputs
+
+The first interface is a slightly  modified version of the nextjs example at
 https://github.com/vercel/next.js/tree/canary/examples/with-webassembly,
-including WebAssembly module generated from a rust crate, instead of the simple
-`.rs` file used in the Vercel example.
+including a WebAssembly module generated from a rust crate, instead of the
+simple `.rs` file used in the Vercel example.
 
 The crate is defined in [the `/wasm`
 directory](https://github.com/mpadge/wasm-next/tree/main/wasm), and built with
 the [npm script, `npm run
-build-crate`](https://github.com/mpadge/wasm-next/blob/19f1678998e228c172d061b2c1fbbad701a65a96/package.json#L7).
+build:wasm`](https://github.com/mpadge/wasm-next/blob/main/package.json#L6).
 This command compiles the WebAssembly binary module in the [`./pkg`
-directory](https://github.com/mpadge/wasm-next/tree/main/pkg). (This location
-must also be specified in
-[`next.config.js`](https://github.com/mpadge/wasm-next/blob/main/next.config.js).)
-All files in this directory, including the compiled binary, are then committed
-with this repository, and the whole site built with `npm run build`. (Compiling
-binaries on a server requires the community-supported [rust
+directory](https://github.com/mpadge/wasm-next/tree/main/pkg), where this
+`./pkg` location must also be specified in
+[`next.config.js`](https://github.com/mpadge/wasm-next/blob/main/next.config.js).
+All of the files, including the compiled binaries, are then committed with this
+repository, and the whole site built with `npm run build`. (Compiling binaries
+on a server requires the community-supported [rust
 runtime](https://github.com/vercel-community/rust).)
 
-## WebAssembly interfaces from rust
+## 2. WebAssembly processing of vectors
 
-The main rust function added here is [`mult_two` in
+The second example uses standard WebAssembly interfaces to accept two input
+vectors, and return the result of adding each pair of input elements.
+The main rust function for this is [`mult_two` in
 `wasm/src/lib.rs`](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs).
-This function demonstrates how to pass vectors between JavaScript and Rust: as
+This function demonstrates the standard procedure to pass vectors between TypeScript and Rust: as
 a pointer to the start of the vector in memory, and an integer defining the
 length of the vector. The vectors may then be assembled in rust as on [lines
-13-14](
-`wasm/src/lib.rs`](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs#L13-L14).
+16-17 of
+`wasm/src/lib.rs`](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs#L16-L17).
+The length of the return vector must be stored in rust as a global variable,
+which can then be accessed using the function
+[`get_result_len()`](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs#L34-L36).
 
-To return vectors from rust, they must first be converted to pointers as on
-[line
-21](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs#L21), and the
-vector itself then [removed from memory in
-rust](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs#L25).
-Accessing the vectors from JavaScript requires both the pointer to the start of
-the vector, and it's length. This length is recorded in the mutable global
-variable defined at the [start of
-`lib.rs`](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs#L6).
-The value of this variable may then be queries using the additionally exported
-function,
-[`get_result_len()`](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs#L31-L33).
-
-## Accessing WebAssembly from JavaScript
-
-The function used to pass vectors from JavaScript to Rust is in
+Use of these two WebAssembly functions in TypeScript is demonstrated in
 [`src/components/WasmVectorMult.tsx`](https://github.com/mpadge/wasm-next/blob/main/src/components/WasmVectorMult.tsx).
-This file should be reasonably self-explanatory, but it is important to note
-that the `allocateSpaceForVector` function is hard-coded for vectors of `f64`
-values, and would need to be modified to allocate space for storing any other
-kind of elements.
+
+
+## 3. nextjs, WebAssembly, and wasm-bindgen
+
+The previous example demonstrates some of the intricacies of passing complex,
+variable-length objects between TypeScript and WebAssembly. The
+[`wasm-bindgen`](https://github.com/rustwasm/wasm-bindgen) crate provides a
+simpler interface for passing complex objects between TypeScript and
+WebAssembly. The final component here uses `wasm-bindgen` to read two local
+JSON files bundled with this repository and containing columns of numeric
+values, to extract a specified column from each of those files, and to compute
+pairwise average values.
+
+The TypeScript interface using `wasm-bindgen` is in
+[`src/components/WasmJson.tsx`](https://github.com/mpadge/wasm-next/blob/main/src/components/WasmJson.tsx),
+where [Line 43](
+https://github.com/mpadge/wasm-next/blob/main/src/components/WasmJson.tsx#L43)
+demonstrates that the compiled WebAssembly module must be accessed by an
+asynchronous `fetch` call. These calls in nextjs can only access public URLs,
+meaning that the WebAssembly binary must be accessible from the `./public`
+directory of this repository. The `package.json` file includes a final command
+to copy the compiled binary from the `./pkg` directory [across to
+`./public/pkg`](https://github.com/mpadge/wasm-next/blob/main/package.json#L6).
+Note that the binary must be copied, not moved, so that copies of the compiled
+binary must be held both in the internal `./pkg` directory, and mirrored in the
+`./public/pkg` directory. (Alternative approaches that avoid this duplication
+require manually editing [the `testcrate.js`
+file](https://github.com/mpadge/wasm-next/blob/main/pkg/testcrate.js) each time
+it is automatically re-generated by `wasm-pack`.)
+
+
+The
+[`WasmJson.tsx`](https://github.com/mpadge/wasm-next/blob/main/src/components/WasmJson.tsx)
+file uses two main react effects, one to load the JSON files into the module,
+and the second to pass the associated data to WebAssembly and wait for the
+response. The JSON data are converted to string in TypeScript before passing to
+rust, allowing [`wasm-bindgen`](https://github.com/rustwasm/wasm-bindgen) to
+use [generic `&str`
+objects](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs#L66),
+rather than explicit pointers and object lengths.
+
