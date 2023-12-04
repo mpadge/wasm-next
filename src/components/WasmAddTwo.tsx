@@ -1,6 +1,5 @@
 import type { InitOutput } from '@/../pkg/testcrate';
-import { initSync } from '@/../pkg/testcrate.js';
-import { add_two } from '@/../pkg/testcrate_bg.wasm';
+import { add_two } from '@/../pkg/testcrate.js';
 
 import dynamic from 'next/dynamic'
 
