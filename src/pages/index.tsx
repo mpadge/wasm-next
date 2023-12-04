@@ -17,7 +17,7 @@ export default function Page() {
         setNumber2(Number(value));
     }
 
-    const [Result, setResult] = useState(null);
+    const [bindgenResult, setResult] = useState<Object | null>(null);
     const handleResultChange = (Object: any) => {
         setResult(Object);
     }
@@ -42,10 +42,12 @@ export default function Page() {
         />
         <WasmAddTwo number1={Number1} number2={Number2} />
         <WasmVectorMult vector1={Vector1} vector2={Vector2} />
+
+        <WasmBindGenCalc filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} handleResultChange={handleResultChange} />
+
         <div className={styles.json}>
-            <WasmBindGenCalc filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} handleResultChange={handleResultChange} />
-            <h1>BindGen Result</h1>
-                {Result && <pre>{JSON.stringify(Result, null, 2)}</pre>}
+            <h1>BindGen bindgenResult</h1>
+                {bindgenResult && <pre>{JSON.stringify(bindgenResult, null, 2)}</pre>}
         </div>
         </div>
         </>
