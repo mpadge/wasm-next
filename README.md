@@ -92,9 +92,9 @@ to rust, allowing [`wasm-bindgen`](https://github.com/rustwasm/wasm-bindgen) to
 use [generic `&str`
 objects](https://github.com/mpadge/wasm-next/blob/main/wasm/src/lib.rs#L66),
 rather than explicit pointers to memory addresses and object lengths. And that,
-finally, is the whole point of using `wasm-bindgen`, to avoid any need to
-explicitly interact with underlying memory accessed and used by the WebAssembly
-module.
+finally, is the whole point of using `wasm-bindgen`: to avoid the kind of
+explicit interaction with underlying memory that was necessary in the previous
+vector example.
 
 One final and important point is that WebAssembly interfaces, with or without
 `wasm-bindgen`, are generally defined in a `.js` file in the WebAssembly build
@@ -111,7 +111,10 @@ JavaScript interfaces to the `wasm-bindgen` functions defined in
 are automatically generated in
 [`/pkg/testcrate.js`](https://github.com/mpadge/wasm-next/blob/main/pkg/testcrate.js),
 and may be imported and used as in the [first line of `WasmBindGen.tsx`](
-https://github.com/mpadge/wasm-next/blob/main/src/components/WasmBindGen.tsx#L1).
+https://github.com/mpadge/wasm-next/blob/main/src/components/WasmBindGen.tsx#L1):
+```{js}
+import * as wasm_js from "@/../pkg/testcrate.js";
+```
 The binary module itself must then also be initalised, and its memory usage
 synchronised with the JavaScript code, with [Line 47 of `WasmBindGen.tsx`](
 https://github.com/mpadge/wasm-next/blob/main/src/components/WasmBindGen.tsx#L47):
