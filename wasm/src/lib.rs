@@ -36,13 +36,13 @@ pub extern "C" fn get_result_len() -> usize {
 }
 
 #[wasm_bindgen]
-pub fn parse_json(json: &str) -> String {
+pub fn parse_json(json1: &str, _json2: &str, _varname: &str, _nentries: usize) -> String {
     const VARNAME: &str = "bike_index";
     const VEC_IS_ERR: Vec<f64> = Vec::new();
     const NVALUES: usize = 10;
 
     let mut values: Vec<f64> = Vec::new();
-    match serde_json::from_str::<Vec<Value>>(json) {
+    match serde_json::from_str::<Vec<Value>>(json1) {
         Ok(rows) => {
 
             for row in rows {

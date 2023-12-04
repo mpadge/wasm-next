@@ -13,9 +13,9 @@ export interface AddModuleExports {
 
 interface JsonProps {
 filename1: string
-               filename2: string
-               varname: string
-               nentries: number
+    filename2: string
+    varname: string
+    nentries: number
 }
 
 const WasmJson = dynamic({
@@ -47,7 +47,7 @@ const WasmJson = dynamic({
                 .then(bytes => {
                     if (data1 && data2) {
                         const thiswasm = wasm.initSync(bytes);
-                        const resultJson = wasm.parse_json(JSON.stringify(data1));
+                        const resultJson = wasm.parse_json(JSON.stringify(data1), JSON.stringify(data2), varname, nentries);
                         const resultObj = JSON.parse(resultJson);
                         setResult(resultObj);
                     }
