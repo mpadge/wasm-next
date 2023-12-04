@@ -7,10 +7,6 @@ interface VectorMultProps {
   vector2: Float64Array
 }
 
-interface MultTwoExports {
-  mult_two: (a: Float64Array, b: Float64Array) => Float64Array
-}
-
 function allocateSpaceForVector(vector: Float64Array, memory: WebAssembly.Memory): number {
   const ptr = memory.buffer.byteLength;
   const requiredSpace = vector.length * vector.BYTES_PER_ELEMENT;
@@ -23,8 +19,6 @@ function allocateSpaceForVector(vector: Float64Array, memory: WebAssembly.Memory
 const WasmVectorMult = dynamic({
   loader: async () => {
     // @ts-ignore
-    const { mult_two: multTwo } = (await import('@/../pkg/testcrate_bg.wasm')) as MultTwoExports
-
     const { mult_two, get_result_len, memory } = await import('@/../pkg/testcrate_bg.wasm');
 
     const Component = ({ vector1, vector2 }: VectorMultProps) => {
