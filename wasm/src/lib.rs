@@ -64,10 +64,18 @@ fn read_one_json(json: &str, varname: &str, nentries: usize) -> Vec<f64> {
 
 #[wasm_bindgen]
 pub fn parse_json(json1: &str, json2: &str, varname: &str, nentries: usize) -> String {
-    const VEC_IS_ERR: Vec<f64> = Vec::new();
+    let mut values: Vec<f64> = Vec::new();
 
     let values1 = read_one_json(json1, varname, nentries);
-    let _values2 = read_one_json(json2, varname, nentries);
+    let values2 = read_one_json(json2, varname, nentries);
 
-    serde_json::to_string(&values1).unwrap()
+    if values1.len() != values2.len() {
+        return serde_json::to_string(&values).unwrap();
+    } else {
+        for (v1, v2) in values1.iter().zip(values2.iter()) {
+            values.push((v1 + v2) / 2.0);
+        }
+    }
+
+    serde_json::to_string(&values).unwrap()
 }
