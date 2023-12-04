@@ -22,7 +22,7 @@ export default function Page() {
 
     const filename1 = "/data/dat1.json";
     const filename2 = "/data/dat2.json";
-    const varname = "bike_index";
+    const varnames = ["bike_index", "social_index"];
     const nentries = 5;
 
     return (
@@ -36,7 +36,7 @@ export default function Page() {
         />
         <WasmAddTwo number1={Number1} number2={Number2} />
         <WasmVectorMult vector1={Vector1} vector2={Vector2} />
-        <WasmBindGen filename1={filename1} filename2={filename2} varname={varname} nentries={nentries} />
+        <WasmBindGen filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} />
         </div>
         </>
     )
