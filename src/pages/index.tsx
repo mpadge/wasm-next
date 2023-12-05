@@ -22,9 +22,10 @@ export default function Page() {
         setResult(Object);
     }
 
-    // Initialize vectors for calling mult_two fn:
-    const Vector1 = Float64Array.from({ length: 5 }, () => Math.random());
-    const Vector2 = Float64Array.from({ length: 5 }, () => Math.random());
+    // Initialize vectors for calling mult_two fn. These need to be react states
+    // to ensure they are only generated one time.
+    const [Vector1, setVector1] = useState(Float64Array.from({ length: 5 }, () => Math.random()));
+    const [Vector2, setVector2] = useState(Float64Array.from({ length: 5 }, () => Math.random()));
 
     const filename1 = "/data/dat1.json";
     const filename2 = "/data/dat2.json";
