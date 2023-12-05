@@ -14,12 +14,13 @@ interface BindGenProps {
     filename2: string
     varnames: string[]
     nentries: number
+    bindgenResult: Object | null
     handleResultChange: (Object: any) => void
 }
 
 const WasmBindGenCalc = dynamic({
     loader: async () => {
-        const Component = ({ filename1, filename2, varnames, nentries, handleResultChange }: BindGenProps) => {
+        const Component = ({ filename1, filename2, varnames, nentries, bindgenResult, handleResultChange }: BindGenProps) => {
             const [data1, setData1] = useState(null);
             const [data2, setData2] = useState(null);
 
@@ -55,6 +56,13 @@ const WasmBindGenCalc = dynamic({
                     console.error('Error fetching wasm module:', error);
                     });
                 }, [data1, data2, varnames, nentries, handleResultChange]);
+
+            return (
+                <div className={styles.json}>
+                    <h1>BindGen bindgenResult</h1>
+                        {bindgenResult && <pre>{JSON.stringify(bindgenResult, null, 2)}</pre>}
+                </div>
+            )
 
         }
 

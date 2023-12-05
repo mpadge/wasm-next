@@ -43,12 +43,8 @@ export default function Page() {
         <WasmAddTwo number1={Number1} number2={Number2} />
         <WasmVectorMult vector1={Vector1} vector2={Vector2} />
 
-        <WasmBindGenCalc filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} handleResultChange={handleResultChange} />
+        <WasmBindGenCalc filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} bindgenResult={bindgenResult} handleResultChange={handleResultChange} />
 
-        <div className={styles.json}>
-            <h1>BindGen bindgenResult</h1>
-                {bindgenResult && <pre>{JSON.stringify(bindgenResult, null, 2)}</pre>}
-        </div>
         </div>
         </>
     )
