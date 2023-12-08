@@ -18,9 +18,14 @@ export default function Page() {
         setNumber2(Number(value));
     }
 
-    const [bindgenResult, setResult] = useState<Object | null>(null);
-    const handleResultChange = (Object: any) => {
-        setResult(Object);
+    const [bindgenResult1, setResult1] = useState<Object | null>(null);
+    const handleResult1Change = (Object: any) => {
+        setResult1(Object);
+    }
+
+    const [bindgenResult2, setResult2] = useState<Object | null>(null);
+    const handleResult2Change = (Object: any) => {
+        setResult2(Object);
     }
 
     // Initialize vectors for calling mult_two fn. These need to be react states
@@ -45,8 +50,8 @@ export default function Page() {
         <WasmAddTwo number1={Number1} number2={Number2} />
         <WasmVectorMult vector1={Vector1} vector2={Vector2} />
 
-        <WasmBindGenCalc filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} bindgenResult={bindgenResult} handleResultChange={handleResultChange} />
-        <WasmBindGenCalc2 filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} bindgenResult={bindgenResult} handleResultChange={handleResultChange} />
+        <WasmBindGenCalc filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} bindgenResult={bindgenResult1} handleResultChange={handleResult1Change} />
+        <WasmBindGenCalc2 filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} bindgenResult={bindgenResult2} handleResultChange={handleResult2Change} />
 
         </div>
         </>
