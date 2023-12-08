@@ -18,19 +18,25 @@ const BindGenReactComponent = (props: BindGenProps) => {
     const [data2, setData2] = useState(null);
     const [wasmModule, setWasmModule] = useState<WebAssembly.WebAssemblyInstantiatedSource | null>(null);
 
+    const filename1 = props.filename1;
+    const filename2 = props.filename2;
+    const varnames = props.varnames;
+    const nentries = props.nentries;
+    const handleResultChange = props.handleResultChange;
+
     useEffect(() => {
         const loadData = async () => {
-            const response1 = await fetch(props.filename1);
+            const response1 = await fetch(filename1);
             const json1 = await response1.json();
             setData1(json1);
 
-            const response2 = await fetch(props.filename2);
+            const response2 = await fetch(filename2);
             const json2 = await response2.json();
             setData2(json2);
         };
 
         loadData();
-        }, [props.filename1, props.filename2]);
+        }, [filename1, filename2]);
 
     useEffect(() => {
         const loadWasm = async () => {
@@ -40,17 +46,17 @@ const BindGenReactComponent = (props: BindGenProps) => {
                 setWasmModule(wasmModule);
                 if (wasmModule && data1 && data2) {
                     const wasmExports = wasmModule.instance.exports as typeof wasm_js;
-                    const varname = props.varnames.join(",");
-                    const resultJson = wasmExports.parse_json(JSON.stringify(data1), JSON.stringify(data2), varname, props.nentries);
+                    const varname = varnames.join(",");
+                    const resultJson = wasmExports.parse_json(JSON.stringify(data1), JSON.stringify(data2), varname, nentries);
                     const resultObj = JSON.parse(resultJson);
-                    props.handleResultChange(resultObj);
+                    handleResultChange(resultObj);
                 }
             } catch (err) {
                 console.error(`Unexpected error in loadWasm. [Message: ${(err as Error).message}]`);
             }
         };
         loadWasm();
-    }, [data1, data2, props.varnames, props.nentries, props.handleResultChange]);
+    }, [data1, data2, varnames, nentries, handleResultChange]);
 
     return (
         <div className={styles.json2}>

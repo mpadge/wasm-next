@@ -1,9 +1,5 @@
 import dynamic from 'next/dynamic'
 
-export interface AddModuleExports {
-    parse_json(): string
-}
-
 interface BindGenProps {
     filename1: string
     filename2: string
