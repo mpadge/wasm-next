@@ -18,7 +18,7 @@ interface BindGenProps {
     handleResultChange: (Object: any) => void
 }
 
-const WasmBindGenCalc = dynamic({
+const WasmBindGenCalc2 = dynamic({
     loader: async () => {
         const Component = ({ filename1, filename2, varnames, nentries, bindgenResult, handleResultChange }: BindGenProps) => {
             const [data1, setData1] = useState(null);
@@ -58,8 +58,8 @@ const WasmBindGenCalc = dynamic({
                 }, [data1, data2, varnames, nentries, handleResultChange]);
 
             return (
-                <div className={styles.json}>
-                    <h1>BindGen1</h1>
+                <div className={styles.json2}>
+                    <h1>BindGen2</h1>
                         {bindgenResult && <pre>{JSON.stringify(bindgenResult, null, 2)}</pre>}
                 </div>
             )
@@ -71,4 +71,4 @@ const WasmBindGenCalc = dynamic({
     ssr: false
 });
 
-export default WasmBindGenCalc;
+export default WasmBindGenCalc2;

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import WasmAddTwo from '../components/WasmAddTwo'
 import WasmVectorMult from '../components/WasmVectorMult'
 import WasmBindGenCalc from '../components/WasmBindGen'
+import WasmBindGenCalc2 from '../components/WasmBindGen2'
 import Control from '../components/control'
 import styles from '@/styles/styles.module.css';
 
@@ -45,6 +46,7 @@ export default function Page() {
         <WasmVectorMult vector1={Vector1} vector2={Vector2} />
 
         <WasmBindGenCalc filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} bindgenResult={bindgenResult} handleResultChange={handleResultChange} />
+        <WasmBindGenCalc2 filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} bindgenResult={bindgenResult} handleResultChange={handleResultChange} />
 
         </div>
         </>
