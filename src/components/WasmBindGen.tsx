@@ -47,7 +47,9 @@ const WasmBindGenCalc = dynamic({
                     if (data1 && data2) {
                         const wasm_binary = wasm_js.initSync(bytes);
                         const varname = varnames.join(",");
-                        const resultJson = wasm_js.parse_json_add(JSON.stringify(data1), JSON.stringify(data2), varname, nentries);
+                        const data1js = JSON.stringify(data1);
+                        const data2js = JSON.stringify(data2);
+                        const resultJson = wasm_js.parse_json_add(data1js, data2js, varname, nentries);
                         const resultObj = JSON.parse(resultJson);
                         handleResultChange(resultObj);
                     }
