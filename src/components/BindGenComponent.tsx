@@ -43,7 +43,7 @@ const BindGenReactComponent = (props: BindGenProps) => {
                     const varname = props.varnames.join(",");
                     const data1js = JSON.stringify(data1);
                     const data2js = JSON.stringify(data2);
-                    const resultJson = wasmExports.parse_json(data1js, data2js, varname, props.nentries);
+                    const resultJson = wasmExports.parse_json_mult(data1js, data2js, varname, props.nentries);
                     const resultObj = JSON.parse(resultJson);
                     props.handleResultChange(resultObj);
                 }

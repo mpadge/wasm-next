@@ -6,7 +6,7 @@ import { useEffect, useState} from 'react';
 import styles from '@/styles/styles.module.css';
 
 export interface AddModuleExports {
-    parse_json(): string
+    parse_json_add(): string
 }
 
 interface BindGenProps {
@@ -47,7 +47,7 @@ const WasmBindGenCalc = dynamic({
                     if (data1 && data2) {
                         const wasm_binary = wasm_js.initSync(bytes);
                         const varname = varnames.join(",");
-                        const resultJson = wasm_js.parse_json(JSON.stringify(data1), JSON.stringify(data2), varname, nentries);
+                        const resultJson = wasm_js.parse_json_add(JSON.stringify(data1), JSON.stringify(data2), varname, nentries);
                         const resultObj = JSON.parse(resultJson);
                         handleResultChange(resultObj);
                     }
