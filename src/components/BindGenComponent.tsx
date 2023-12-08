@@ -53,8 +53,8 @@ const BindGenReactComponent = (props: BindGenProps) => {
     }, [data1, data2, props.varnames, props.nentries, props.handleResultChange]);
 
     return (
-        <div className={styles.json}>
-            <h1>BindGen</h1>
+        <div className={styles.json2}>
+            <h1>BindGen2</h1>
                 {props.bindgenResult && <pre>{JSON.stringify(props.bindgenResult, null, 2)}</pre>}
         </div>
     )
