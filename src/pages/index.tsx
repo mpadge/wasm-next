@@ -50,8 +50,22 @@ export default function Page() {
         <WasmAddTwo number1={Number1} number2={Number2} />
         <WasmVectorMult vector1={Vector1} vector2={Vector2} />
 
-        <WasmBindGenCalc filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} bindgenResult={bindgenResult1} handleResultChange={handleResult1Change} />
-        <WasmBindGenCalc2 filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} bindgenResult={bindgenResult2} handleResultChange={handleResult2Change} />
+        <WasmBindGenCalc
+            filename1={filename1}
+            filename2={filename2}
+            varnames={varnames}
+            nentries={nentries}
+            bindgenResult={bindgenResult1}
+            handleResultChange={handleResult1Change}
+        />
+        <WasmBindGenCalc2
+            filename1={filename1}
+            filename2={filename2}
+            varnames={varnames}
+            nentries={nentries}
+            bindgenResult={bindgenResult2}
+            handleResultChange={handleResult2Change}
+        />
 
         </div>
         </>
