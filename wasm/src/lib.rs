@@ -101,3 +101,14 @@ pub fn parse_json_mult(json1: &str, json2: &str, varname: &str, nentries: usize)
 
     serde_json::to_string(&values).unwrap()
 }
+
+
+#[wasm_bindgen]
+pub fn test_one(nentries: usize) -> usize {
+    return nentries;
+}
+
+#[wasm_bindgen]
+pub fn test_two(varname: &str, nentries: usize) -> usize {
+    return nentries;
+}
