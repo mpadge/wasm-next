@@ -12,23 +12,23 @@ interface BindGenProps {
     handleResultChange: (Object: any) => void
 }
 
-const Component = ({ filename1, filename2, varnames, nentries, bindgenResult, handleResultChange }: BindGenProps) => {
+const Component = (props: BindGenProps) => {
     const [data1, setData1] = useState(null);
     const [data2, setData2] = useState(null);
 
     useEffect(() => {
         const loadData = async () => {
-            const response1 = await fetch(filename1);
+            const response1 = await fetch(props.filename1);
             const json1 = await response1.json();
             setData1(json1);
 
-            const response2 = await fetch(filename2);
+            const response2 = await fetch(props.filename2);
             const json2 = await response2.json();
             setData2(json2);
         };
 
         loadData();
-        }, [filename1, filename2]);
+        }, [props.filename1, props.filename2]);
 
     useEffect(() => {
         fetch('@/../pkg/testcrate_bg.wasm')
@@ -38,23 +38,23 @@ const Component = ({ filename1, filename2, varnames, nentries, bindgenResult, ha
         .then(bytes => {
             if (data1 && data2) {
                 const wasm_binary = wasm_js.initSync(bytes);
-                const varname = varnames.join(",");
+                const varname = props.varnames.join(",");
                 const data1js = JSON.stringify(data1);
                 const data2js = JSON.stringify(data2);
-                const resultJson = wasm_js.parse_json_mult(data1js, data2js, varname, nentries);
+                const resultJson = wasm_js.parse_json_mult(data1js, data2js, varname, props.nentries);
                 const resultObj = JSON.parse(resultJson);
-                handleResultChange(resultObj);
+                props.handleResultChange(resultObj);
             }
             })
         .catch(error => {
             console.error('Error fetching wasm module:', error);
             });
-        }, [data1, data2, varnames, nentries, handleResultChange]);
+        }, [data1, data2, props.varnames, props.nentries, props.handleResultChange]);
 
     return (
         <div className={styles.json2}>
             <h1>BindGen2</h1>
-                {bindgenResult && <pre>{JSON.stringify(bindgenResult, null, 2)}</pre>}
+                {props.bindgenResult && <pre>{JSON.stringify(props.bindgenResult, null, 2)}</pre>}
         </div>
     )
 }
