@@ -8,13 +8,12 @@ interface BindGenProps {
     filename2: string
     varnames: string[]
     nentries: number
-    bindgenResult: Object | null
-    handleResultChange: (Object: any) => void
 }
 
 const Component = (props: BindGenProps) => {
     const [data1, setData1] = useState(null);
     const [data2, setData2] = useState(null);
+    const [result, setResult] = useState<Object | null>(null);
 
     useEffect(() => {
         const loadData = async () => {
@@ -43,18 +42,18 @@ const Component = (props: BindGenProps) => {
                 const data2js = JSON.stringify(data2);
                 const resultJson = wasm_js.parse_json_mult(data1js, data2js, varname, props.nentries);
                 const resultObj = JSON.parse(resultJson);
-                props.handleResultChange(resultObj);
+                setResult(resultObj);
             }
             })
         .catch(error => {
             console.error('Error fetching wasm module:', error);
             });
-        }, [data1, data2, props.varnames, props.nentries, props.handleResultChange]);
+        }, [data1, data2, props.varnames, props.nentries]);
 
     return (
         <div className={styles.json2}>
             <h1>BindGen2</h1>
-                {props.bindgenResult && <pre>{JSON.stringify(props.bindgenResult, null, 2)}</pre>}
+                {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
         </div>
     )
 }

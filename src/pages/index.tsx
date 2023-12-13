@@ -18,16 +18,6 @@ export default function Page() {
         setNumber2(Number(value));
     }
 
-    const [bindgenResult1, setResult1] = useState<Object | null>(null);
-    const handleResult1Change = (Object: any) => {
-        setResult1(Object);
-    }
-
-    const [bindgenResult2, setResult2] = useState<Object | null>(null);
-    const handleResult2Change = (Object: any) => {
-        setResult2(Object);
-    }
-
     // Initialize vectors for calling mult_two fn. These need to be react states
     // to ensure they are only generated one time.
     const [Vector1, setVector1] = useState(Float64Array.from({ length: 5 }, () => Math.random()));
@@ -55,16 +45,12 @@ export default function Page() {
             filename2={filename2}
             varnames={varnames}
             nentries={nentries}
-            bindgenResult={bindgenResult1}
-            handleResultChange={handleResult1Change}
         />
         <WasmBindGenCalc2
             filename1={filename1}
             filename2={filename2}
             varnames={varnames}
             nentries={nentries}
-            bindgenResult={bindgenResult2}
-            handleResultChange={handleResult2Change}
         />
 
         </div>
