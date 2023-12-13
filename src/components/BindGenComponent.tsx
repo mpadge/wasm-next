@@ -29,6 +29,12 @@ const Component = (props: BindGenProps) => {
         loadData();
         }, [props.filename1, props.filename2]);
 
+    // The 'initSync' call for the WASM module must be made wihtin the same
+    // effect in which any module functions are called. For non-bindgen use, it
+    // is possible to initialise a WASM module in a separtate effect, and
+    // pass that to another effect to make function calls, but that is not
+    // possible for bindgen calls which rely on complex input types, and
+    // thus need access to memory allocated for input and output objects.
     useEffect(() => {
         fetch('@/../pkg/testcrate_bg.wasm')
         .then(response => {

@@ -1,3 +1,9 @@
+// A self-contained nested component with:
+// - A nextjs dynamic loader, and
+// - A WasmBindGenCalc component that calls the actual WASM module.
+//
+// 'WasmBindGen2' separates these two into separate components.
+
 import * as wasm_js from '@/../pkg/testcrate.js';
 
 import dynamic from 'next/dynamic'
