@@ -7,10 +7,17 @@ import { useEffect, useState} from 'react';
 
 import BindGenComponent from '@/components/BindGenComponent';
 
+interface BindGenProps {
+    filename1: string
+    filename2: string
+    varnames: string[]
+    nentries: number
+}
+
 const WasmBindGenCalc2 = dynamic({
     loader: async () => {
         const Component = BindGenComponent;
-        return (props) => <Component {...props} />;
+        return (props: BindGenProps) => <Component {...props} />;
     },
     ssr: false
 });
