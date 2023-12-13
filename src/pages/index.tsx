@@ -4,6 +4,7 @@ import Link from 'next/link'
 import WasmAddTwo from '../components/WasmAddTwo'
 import WasmVectorMult from '../components/WasmVectorMult'
 import WasmBindGenCalc from '../components/WasmBindGen'
+import WasmBindGenCalc2 from '../components/WasmBindGen2'
 import Control from '../components/control'
 import styles from '@/styles/styles.module.css';
 
@@ -15,11 +16,6 @@ export default function Page() {
     }
     const handleNumber2Change = (value: string) => {
         setNumber2(Number(value));
-    }
-
-    const [bindgenResult, setResult] = useState<Object | null>(null);
-    const handleResultChange = (Object: any) => {
-        setResult(Object);
     }
 
     // Initialize vectors for calling mult_two fn. These need to be react states
@@ -44,7 +40,18 @@ export default function Page() {
         <WasmAddTwo number1={Number1} number2={Number2} />
         <WasmVectorMult vector1={Vector1} vector2={Vector2} />
 
-        <WasmBindGenCalc filename1={filename1} filename2={filename2} varnames={varnames} nentries={nentries} bindgenResult={bindgenResult} handleResultChange={handleResultChange} />
+        <WasmBindGenCalc
+            filename1={filename1}
+            filename2={filename2}
+            varnames={varnames}
+            nentries={nentries}
+        />
+        <WasmBindGenCalc2
+            filename1={filename1}
+            filename2={filename2}
+            varnames={varnames}
+            nentries={nentries}
+        />
 
         </div>
         </>

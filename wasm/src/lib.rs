@@ -63,7 +63,7 @@ fn read_one_json(json: &str, varname: &str, nentries: usize) -> Vec<f64> {
 }
 
 #[wasm_bindgen]
-pub fn parse_json(json1: &str, json2: &str, varname: &str, nentries: usize) -> String {
+pub fn parse_json_add(json1: &str, json2: &str, varname: &str, nentries: usize) -> String {
     let varnames: Vec<&str> = varname.split(',').collect();
     let varname1 = varnames.first().cloned().unwrap_or_default();
     let mut values: Vec<f64> = Vec::new();
@@ -76,6 +76,26 @@ pub fn parse_json(json1: &str, json2: &str, varname: &str, nentries: usize) -> S
     } else {
         for (v1, v2) in values1.iter().zip(values2.iter()) {
             values.push((v1 + v2) / 2.0);
+        }
+    }
+
+    serde_json::to_string(&values).unwrap()
+}
+
+#[wasm_bindgen]
+pub fn parse_json_mult(json1: &str, json2: &str, varname: &str, nentries: usize) -> String {
+    let varnames: Vec<&str> = varname.split(',').collect();
+    let varname1 = varnames.first().cloned().unwrap_or_default();
+    let mut values: Vec<f64> = Vec::new();
+
+    let values1 = read_one_json(json1, varname1, nentries);
+    let values2 = read_one_json(json2, varname1, nentries);
+
+    if values1.len() != values2.len() {
+        return serde_json::to_string(&values).unwrap();
+    } else {
+        for (v1, v2) in values1.iter().zip(values2.iter()) {
+            values.push(v1 * v2);
         }
     }
 

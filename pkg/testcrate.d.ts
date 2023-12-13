@@ -7,7 +7,15 @@
 * @param {number} nentries
 * @returns {string}
 */
-export function parse_json(json1: string, json2: string, varname: string, nentries: number): string;
+export function parse_json_add(json1: string, json2: string, varname: string, nentries: number): string;
+/**
+* @param {string} json1
+* @param {string} json2
+* @param {string} varname
+* @param {number} nentries
+* @returns {string}
+*/
+export function parse_json_mult(json1: string, json2: string, varname: string, nentries: number): string;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
@@ -16,7 +24,8 @@ export interface InitOutput {
   readonly add_two: (a: number, b: number) => number;
   readonly mult_two: (a: number, b: number, c: number, d: number) => number;
   readonly get_result_len: () => number;
-  readonly parse_json: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => void;
+  readonly parse_json_add: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => void;
+  readonly parse_json_mult: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => void;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
   readonly __wbindgen_malloc: (a: number, b: number) => number;
   readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;

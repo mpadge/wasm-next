@@ -63,6 +63,19 @@
   width: 15dvw;
 }
 
+.json2 {
+  display: inherit;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  z-index: 10;
+  position: absolute;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  top: 0px;
+  left: 36dvw;
+  width: 15dvw;
+}
+
 .controls h2 {
   font-weight: 600;
   margin-top: 0.7rem;

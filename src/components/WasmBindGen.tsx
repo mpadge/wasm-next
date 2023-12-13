@@ -1,3 +1,9 @@
+// A self-contained nested component with:
+// - A nextjs dynamic loader, and
+// - A WasmBindGenCalc component that calls the actual WASM module.
+//
+// 'WasmBindGen2' separates these two into separate components.
+
 import * as wasm_js from '@/../pkg/testcrate.js';
 
 import dynamic from 'next/dynamic'
@@ -6,7 +12,7 @@ import { useEffect, useState} from 'react';
 import styles from '@/styles/styles.module.css';
 
 export interface AddModuleExports {
-    parse_json(): string
+    parse_json_add(): string
 }
 
 interface BindGenProps {
@@ -14,29 +20,28 @@ interface BindGenProps {
     filename2: string
     varnames: string[]
     nentries: number
-    bindgenResult: Object | null
-    handleResultChange: (Object: any) => void
 }
 
 const WasmBindGenCalc = dynamic({
     loader: async () => {
-        const Component = ({ filename1, filename2, varnames, nentries, bindgenResult, handleResultChange }: BindGenProps) => {
+        const Component = (props: BindGenProps) => {
             const [data1, setData1] = useState(null);
             const [data2, setData2] = useState(null);
+            const [result, setResult] = useState<Object | null>(null);
 
             useEffect(() => {
                 const loadData = async () => {
-                    const response1 = await fetch(filename1);
+                    const response1 = await fetch(props.filename1);
                     const json1 = await response1.json();
                     setData1(json1);
 
-                    const response2 = await fetch(filename2);
+                    const response2 = await fetch(props.filename2);
                     const json2 = await response2.json();
                     setData2(json2);
                 };
 
                 loadData();
-                }, [filename1, filename2]);
+                }, [props.filename1, props.filename2]);
 
             useEffect(() => {
                 fetch('@/../pkg/testcrate_bg.wasm')
@@ -46,21 +51,23 @@ const WasmBindGenCalc = dynamic({
                 .then(bytes => {
                     if (data1 && data2) {
                         const wasm_binary = wasm_js.initSync(bytes);
-                        const varname = varnames.join(",");
-                        const resultJson = wasm_js.parse_json(JSON.stringify(data1), JSON.stringify(data2), varname, nentries);
+                        const varname = props.varnames.join(",");
+                        const data1js = JSON.stringify(data1);
+                        const data2js = JSON.stringify(data2);
+                        const resultJson = wasm_js.parse_json_add(data1js, data2js, varname, props.nentries);
                         const resultObj = JSON.parse(resultJson);
-                        handleResultChange(resultObj);
+                        setResult(resultObj);
                     }
                     })
                 .catch(error => {
                     console.error('Error fetching wasm module:', error);
                     });
-                }, [data1, data2, varnames, nentries, handleResultChange]);
+                }, [data1, data2, props.varnames, props.nentries]);
 
             return (
                 <div className={styles.json}>
-                    <h1>BindGen bindgenResult</h1>
-                        {bindgenResult && <pre>{JSON.stringify(bindgenResult, null, 2)}</pre>}
+                    <h1>BindGen1</h1>
+                        {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
                 </div>
             )
 
