@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from 'next/dynamic'
 
 import styles from '../styles/styles.module.css';

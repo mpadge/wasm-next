@@ -1,3 +1,5 @@
+"use client";
+
 // A self-contained nested component with:
 // - A nextjs dynamic loader, and
 // - A WasmBindGenCalc component that calls the actual WASM module.

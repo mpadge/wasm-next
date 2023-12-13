@@ -1,5 +1,8 @@
+"use client";
+
 import { useRouter } from 'next/router'
 import { useState } from 'react';
+import { Metadata} from 'next';
 import Link from 'next/link'
 import WasmAddTwo from '../components/WasmAddTwo'
 import WasmVectorMult from '../components/WasmVectorMult'
@@ -8,7 +11,7 @@ import WasmBindGenCalc2 from '../components/WasmBindGen2'
 import Control from '../components/control'
 import styles from '@/styles/styles.module.css';
 
-export default function Page() {
+export default function Home() {
     const [Number1, setNumber1] = useState(10);
     const [Number2, setNumber2] = useState(10);
     const handleNumber1Change = (value: string) => {
