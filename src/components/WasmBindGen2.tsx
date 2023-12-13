@@ -1,13 +1,14 @@
 import dynamic from 'next/dynamic'
 import { useEffect, useState} from 'react';
 
-import Component from '@/components/BindGenComponent';
+import BindGenComponent from '@/components/BindGenComponent';
 
-const WasmBindGenCalc = dynamic({
+const WasmBindGenCalc2 = dynamic({
     loader: async () => {
-        return Component
+        const Component = BindGenComponent;
+        return (props) => <Component {...props} />;
     },
     ssr: false
 });
 
-export default WasmBindGenCalc;
+export default WasmBindGenCalc2;
