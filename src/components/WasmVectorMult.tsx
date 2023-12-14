@@ -21,7 +21,7 @@ function allocateSpaceForVector(vector: Float64Array, memory: WebAssembly.Memory
 const WasmVectorMultComponent = ({ vector1, vector2 }: VectorMultProps) => {
     const [mult_two, setMultTwo] = useState<Function | null>(null);
     const [get_result_len, setGetResultLen] = useState<Function | null>(null);
-    const [memory, setMemory] = useState<Function | null>(null);
+    const [memory, setMemory] = useState<WebAssembly.Memory | null>(null);
 
     useEffect(() => {
         const loadWasm = async () => {
