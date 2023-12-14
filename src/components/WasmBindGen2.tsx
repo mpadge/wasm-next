@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 // A modified version of 'WasmBindGenCalc'' which separates the two two
 // components into this one, loaded in the main page, and the component itself,
@@ -16,11 +16,7 @@ interface BindGenProps {
     nentries: number
 }
 
-const WasmBindGenCalc2 = dynamic({
-    loader: async () => {
-        const Component = BindGenComponent;
-        return (props: BindGenProps) => <Component {...props} />;
-    },
+const WasmBindGenCalc2 = dynamic(() => Promise.resolve(BindGenComponent), {
     ssr: false
 });
 
