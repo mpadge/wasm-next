@@ -1,26 +1,37 @@
-import dynamic from 'next/dynamic'
+'use client'
 
+import dynamic from 'next/dynamic'
 import styles from '../styles/styles.module.css';
+import { useState, useEffect } from 'react';
 
 interface WasmAddTwoProps {
   number1: number
   number2: number
 }
 
-const WasmAddTwo = dynamic({
-  loader: async () => {
-    // @ts-ignore
-    const { add_two } = (await import('@/../pkg/testcrate_bg.wasm'));
+const WasmAddTwoComponent = ({ number1, number2 }: WasmAddTwoProps) => {
+    const [addTwo, setAddTwo] = useState<Function | null>(null);
 
-    return ({ number1, number2 }: WasmAddTwoProps) => (
-      <div className={styles.number}>
+    useEffect(() => {
+        const loadWasm = async () => {
+            const wasmModule = await import('@/../pkg/testcrate_bg.wasm');
+            setAddTwo(() => wasmModule.add_two);
+        };
+
+        loadWasm();
+    }, []);
+
+    return (
+        <div className={styles.number}>
         <>
-            <h3>Sum:</h3>
-            {add_two(number1, number2)}
+        <h3>Sum:</h3>
+            {addTwo ? addTwo(number1, number2) : 'Loading...'}
         </>
-      </div>
+        </div>
     )
-  },
+}
+
+const WasmAddTwo = dynamic(() => Promise.resolve(WasmAddTwoComponent), {
   // Ensure only client-side execution:
   ssr: false
 })
