@@ -10,25 +10,25 @@ interface WasmAddTwoProps {
 }
 
 const WasmAddTwoComponent = ({ number1, number2 }: WasmAddTwoProps) => {
-  const [addTwo, setAddTwo] = useState<Function | null>(null);
+    const [addTwo, setAddTwo] = useState<Function | null>(null);
 
-  useEffect(() => {
-    const loadWasm = async () => {
-      const wasmModule = await import('@/../pkg/testcrate_bg.wasm');
-      setAddTwo(() => wasmModule.add_two);
-    };
+    useEffect(() => {
+        const loadWasm = async () => {
+            const wasmModule = await import('@/../pkg/testcrate_bg.wasm');
+            setAddTwo(() => wasmModule.add_two);
+        };
 
-    loadWasm();
-  }, []);
+        loadWasm();
+    }, []);
 
-  return (
-    <div className={styles.number}>
-      <>
-          <h3>Sum:</h3>
-          {addTwo ? addTwo(number1, number2) : 'Loading...'}
-      </>
-    </div>
-  )
+    return (
+        <div className={styles.number}>
+        <>
+        <h3>Sum:</h3>
+            {addTwo ? addTwo(number1, number2) : 'Loading...'}
+        </>
+        </div>
+    )
 }
 
 const WasmAddTwo = dynamic(() => Promise.resolve(WasmAddTwoComponent), {
