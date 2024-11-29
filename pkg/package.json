@@ -1,5 +1,6 @@
 {
   "name": "testcrate",
+  "type": "module",
   "collaborators": [
     "Mark Padgham <mark.padgham@email.com>"
   ],
@@ -10,7 +11,7 @@
     "testcrate.js",
     "testcrate.d.ts"
   ],
-  "module": "testcrate.js",
+  "main": "testcrate.js",
   "types": "testcrate.d.ts",
   "sideEffects": [
     "./snippets/*"
