@@ -127,3 +127,17 @@ then be called to load and synchronise the WebAssembly module as `wasm_binary`.
 Although `wasm_binary` is not used any further in this example, this
 initialisation is necessary to enable the module to access memory, and if
 necessary this memory can be subsequently accessed as `wasm_binary.memory`.
+
+## 4. Error: webpack.cache Caching failed
+
+This repository has been unarchived (Nov 2024) to resolve a new :bug: that has
+arisen:
+
+```
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+```
+
+This error has been reported [on
+StackOverflow](https://stackoverflow.com/questions/73306304/w-webpack-cache-packfilecachestrategy-caching-failed-for-pack-error-unable),
+on [nextjs](https://github.com/vercel/next.js/issues/27650), and on [webpack
+itself](https://github.com/webpack/webpack/issues/11908).
