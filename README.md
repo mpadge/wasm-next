@@ -140,4 +140,7 @@ arisen:
 This error has been reported [on
 StackOverflow](https://stackoverflow.com/questions/73306304/w-webpack-cache-packfilecachestrategy-caching-failed-for-pack-error-unable),
 on [nextjs](https://github.com/vercel/next.js/issues/27650), and on [webpack
-itself](https://github.com/webpack/webpack/issues/11908).
+itself](https://github.com/webpack/webpack/issues/11908). Solution for the
+moment, as documented in
+[issue#4](https://github.com/mpadge/wasm-next/issues/4) is just to downgrade to
+Node v22, and not (yet) use v23.
